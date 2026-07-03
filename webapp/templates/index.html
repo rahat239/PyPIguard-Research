@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyPIGuard — Package Inspection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="manifest-wrap">
+
+  <header class="manifest-header">
+    <div class="header-top">
+      <span class="doc-code">FORM PG-01</span>
+      <span class="doc-code">REV. 2026</span>
+    </div>
+    <h1 class="brand">PYPIGUARD</h1>
+    <p class="brand-sub">PACKAGE INSPECTION &amp; CLEARANCE FORM</p>
+    <div class="header-rule"></div>
+    <p class="header-note">Every package installed on your system crosses a border first. This is the checkpoint.</p>
+  </header>
+
+  <main class="form-body">
+
+    <section class="field-block">
+      <label class="field-label" for="package-input">
+        <span class="field-number">01</span> DECLARE PACKAGE NAME
+      </label>
+      <div class="input-row">
+        <span class="input-prefix">pip install</span>
+        <input type="text" id="package-input" placeholder="e.g. requests" autocomplete="off" spellcheck="false">
+        <button id="inspect-btn" class="inspect-btn">INSPECT</button>
+      </div>
+      <div class="try-row">
+        <span class="try-label">TRY:</span>
+        <button class="chip" data-pkg="requests">requests</button>
+        <button class="chip" data-pkg="flask">flask</button>
+        <button class="chip chip-malicious" data-pkg="selfcraftint">selfcraftint (known malware)</button>
+      </div>
+    </section>
+
+    <section class="field-block">
+      <label class="field-label" for="file-input">
+        <span class="field-number">01B</span> OR UPLOAD A PACKAGE ARCHIVE DIRECTLY
+      </label>
+      <p class="upload-note">
+        PyPI removes malicious packages once discovered, so a live name lookup will almost
+        always come back CLEARED. To see a FLAGGED result, upload a real package archive
+        (.tar.gz, .tgz, .zip, or .whl) directly &mdash; 20&nbsp;MB limit.
+      </p>
+      <div class="upload-row">
+        <input type="file" id="file-input" accept=".tar.gz,.tgz,.zip,.whl">
+        <button id="upload-btn" class="inspect-btn">INSPECT FILE</button>
+      </div>
+    </section>
+
+    <section class="field-block">
+      <label class="field-label" for="notebook-input">
+        <span class="field-number">01C</span> OR SCAN A JUPYTER NOTEBOOK FOR MALICIOUS IMPORTS
+      </label>
+      <p class="upload-note">
+        Upload a .ipynb file and every imported or pip-installed package is checked against
+        our verified dataset and live PyPI &mdash; useful before running or sharing a notebook
+        you didn't write yourself.
+      </p>
+      <div class="upload-row">
+        <input type="file" id="notebook-input" accept=".ipynb">
+        <button id="notebook-btn" class="inspect-btn">SCAN NOTEBOOK</button>
+      </div>
+    </section>
+
+    <section id="notebook-result-section" class="result-section hidden">
+      <div class="ticket">
+        <div class="ticket-head">
+          <span class="field-number">02B</span> NOTEBOOK SCAN REPORT
+          <span id="notebook-timestamp" class="ticket-timestamp"></span>
+        </div>
+        <div class="ticket-body">
+          <p id="notebook-summary" class="package-summary" style="font-size:15px; margin-bottom:16px;"></p>
+          <ul id="notebook-findings-list" class="findings-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="result-section" class="result-section hidden">
+      <div class="ticket">
+
+        <div class="ticket-head">
+          <span class="field-number">02</span> INSPECTION REPORT
+          <span id="source-badge" class="source-badge"></span>
+          <span id="ticket-timestamp" class="ticket-timestamp"></span>
+        </div>
+
+        <div class="ticket-body">
+          <div class="package-id">
+            <div class="package-name-row">
+              <span id="result-name" class="package-name">—</span>
+              <span id="result-version" class="package-version"></span>
+            </div>
+            <p id="result-summary" class="package-summary"></p>
+            <p id="result-author" class="package-author"></p>
+          </div>
+
+          <div class="stamp-zone">
+            <div id="stamp" class="stamp">
+              <span id="stamp-text">—</span>
+            </div>
+            <div class="confidence-line">
+              <span class="confidence-label">CONFIDENCE</span>
+              <div class="confidence-bar-track">
+                <div id="confidence-bar-fill" class="confidence-bar-fill"></div>
+              </div>
+              <span id="confidence-value" class="confidence-value">—</span>
+            </div>
+          </div>
+
+          <div class="findings-block">
+            <p class="findings-label">ITEMS DECLARED ON INSPECTION</p>
+            <ul id="findings-list" class="findings-list">
+              <li class="findings-empty">No inspection run yet.</li>
+            </ul>
+          </div>
+
+          <div class="stats-strip">
+            <div class="stat"><span id="stat-files" class="stat-value">—</span><span class="stat-label">FILES</span></div>
+            <div class="stat"><span id="stat-pyfiles" class="stat-value">—</span><span class="stat-label">.PY FILES</span></div>
+            <div class="stat"><span id="stat-length" class="stat-value">—</span><span class="stat-label">CODE CHARS</span></div>
+            <div class="stat"><span id="stat-entropy" class="stat-value">—</span><span class="stat-label">ENTROPY</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="error-box" class="error-box hidden"></div>
+    <div id="loading-box" class="loading-box hidden">
+      <span class="loading-text">INSPECTING PACKAGE CONTENTS<span class="dots"><span>.</span><span>.</span><span>.</span></span></span>
+    </div>
+
+    <section class="disclaimer-block">
+      <p class="field-label"><span class="field-number">03</span> KNOW THE LIMITS OF THIS INSPECTION</p>
+      <p class="disclaimer-text">
+        This tool analyzes real, live package code using a machine learning model trained on real, archived
+        malicious PyPI packages and real benign packages. Independently validated at 0.983 ROC-AUC on unseen
+        data. It is a triage aid, not a guarantee &mdash; some sophisticated or disguised malicious code can still
+        pass undetected (measured evasion rate: 9% under simple code transforms). Always review unfamiliar
+        packages yourself before installing in a sensitive environment.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="manifest-footer">
+    <p>PyPIGuard is a static-analysis research tool. Model trained on the ASE 2023 pypi_malregistry dataset and PyPI's official package index.</p>
+  </footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
