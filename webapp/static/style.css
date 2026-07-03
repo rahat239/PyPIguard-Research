@@ -378,6 +378,7 @@ body {
 
 .stamp.verdict-benign { color: var(--stamp-green); }
 .stamp.verdict-malicious { color: var(--stamp-red); }
+.stamp.verdict-unreliable { color: var(--stamp-amber); }
 .stamp.stamp-appear { animation: stampDown 0.35s ease-out; }
 
 @keyframes stampDown {

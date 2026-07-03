@@ -34,7 +34,7 @@ async function inspect(packageName) {
   } catch (err) {
     loadingBox.classList.add("hidden");
     btn.disabled = false;
-    errorBox.textContent = "Could not reach the inspection service. Please try again.";
+    errorBox.textContent = "Could not reach the inspection service. Please try again. (Very large packages may exceed the hosting timeout -- try a local file upload instead.)";
     errorBox.classList.remove("hidden");
   }
 }
@@ -48,11 +48,21 @@ function renderResult(data) {
   const stamp = document.getElementById("stamp");
   const stampText = document.getElementById("stamp-text");
   const isMalicious = data.verdict === "malicious";
+  const isOOD = data.out_of_distribution === true;
 
   stamp.classList.remove("verdict-benign", "verdict-malicious", "stamp-appear");
   void stamp.offsetWidth; // restart animation
-  stamp.classList.add(isMalicious ? "verdict-malicious" : "verdict-benign", "stamp-appear");
-  stampText.textContent = isMalicious ? "FLAGGED" : "CLEARED";
+
+  if (isOOD) {
+    // This package is far larger than anything in the training data --
+    // the model's verdict here is not reliable, so we show a distinct
+    // warning state instead of a potentially wrong CLEARED/FLAGGED stamp.
+    stamp.classList.add("verdict-unreliable", "stamp-appear");
+    stampText.textContent = "UNRELIABLE";
+  } else {
+    stamp.classList.add(isMalicious ? "verdict-malicious" : "verdict-benign", "stamp-appear");
+    stampText.textContent = isMalicious ? "FLAGGED" : "CLEARED";
+  }
 
   document.getElementById("confidence-value").textContent = `${data.confidence}%`;
   const fill = document.getElementById("confidence-bar-fill");
@@ -71,6 +81,14 @@ function renderResult(data) {
 
   const list = document.getElementById("findings-list");
   list.innerHTML = "";
+
+  if (isOOD) {
+    const warningLi = document.createElement("li");
+    warningLi.style.cssText = "border-left-color: var(--stamp-amber); background: rgba(184,134,46,0.12); font-weight: 600;";
+    warningLi.textContent = `This package (${data.stats ? data.stats.num_files : "?"} files) is far larger than any package in our training data. The model's verdict for packages this size is not reliable -- treat this result as informational only, not a determination.`;
+    list.appendChild(warningLi);
+  }
+
   if (!data.flagged_indicators || data.flagged_indicators.length === 0) {
     const li = document.createElement("li");
     li.className = "findings-empty";
@@ -145,7 +163,7 @@ async function inspectFile(file) {
   } catch (err) {
     loadingBox.classList.add("hidden");
     uploadBtn.disabled = false;
-    errorBox.textContent = "Could not reach the inspection service. Please try again.";
+    errorBox.textContent = "Could not reach the inspection service. Please try again. (Very large packages may exceed the hosting timeout -- try a local file upload instead.)";
     errorBox.classList.remove("hidden");
   }
 }
@@ -191,7 +209,7 @@ async function scanNotebook(file) {
   } catch (err) {
     loadingBox.classList.add("hidden");
     notebookBtn.disabled = false;
-    errorBox.textContent = "Could not reach the inspection service. Please try again.";
+    errorBox.textContent = "Could not reach the inspection service. Please try again. (Very large packages may exceed the hosting timeout -- try a local file upload instead.)";
     errorBox.classList.remove("hidden");
   }
 }

@@ -27,9 +27,12 @@ import joblib
 import numpy as np
 from flask import Flask, render_template, request, jsonify
 
+sys.path.insert(0, os.path.dirname(__file__))
+from ast_features import extract_ast_features
+
 app = Flask(__name__)
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "pypiguard_model.joblib")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "final_integrated_model.joblib")
 KNOWN_PACKAGES_PATH = os.path.join(os.path.dirname(__file__), "known_packages.json")
 _model_bundle = None
 _known_packages = None
@@ -108,6 +111,10 @@ FEATURE_LABELS = {
     "has_getattr_dynamic": "Uses dynamic attribute access",
     "has_ctypes": "Uses ctypes (low-level system access)",
     "has_marshal_pickle": "Uses marshal/pickle deserialization",
+    "ast_num_dangerous_builtin_calls": "AST: direct call to eval/exec/compile",
+    "ast_num_getattr_obfuscation": "AST: obfuscated call via getattr(__builtins__, ...) pattern",
+    "ast_num_dynamic_calls": "AST: dynamic (non-literal) function call target",
+    "ast_num_high_entropy_strings": "AST: high-entropy (likely obfuscated) string literal",
 }
 
 
@@ -154,6 +161,10 @@ def extract_features_from_dir(root_dir):
     feats["py_code_entropy"] = round(shannon_entropy(py_content[:20000]), 3) if py_content else 0
     feats["py_code_length"] = len(py_content)
     feats["num_py_files"] = file_exts.get(".py", 0)
+
+    # AST-based features (constant-folding-aware obfuscation detection, structural signals)
+    ast_feats = extract_ast_features(py_content)
+    feats.update(ast_feats)
 
     # Derived features (matching Phase 3 feature engineering)
     feats["code_density"] = feats["py_code_length"] / max(feats["num_files"], 1)
@@ -367,6 +378,11 @@ def scan_notebook():
     })
 
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
 @app.route("/scan", methods=["POST"])
 def scan():
     package_name = (request.json or {}).get("package_name", "").strip()
@@ -481,15 +497,29 @@ def build_verdict_response(feats, package_name, version, author, summary):
     model = model_bundle["model"]
     feature_cols = model_bundle["feature_cols"]
 
+    # Out-of-distribution safety gate: the training data's largest sample had
+    # 5,374 files. Packages far beyond this (e.g. numpy at 8,204 files) are
+    # outside anything the model has seen, and its output there is not
+    # reliable -- verified directly: numpy was misclassified as malicious
+    # during testing before this gate was added. Rather than presenting a
+    # confident-looking but untrustworthy verdict, we flag this explicitly.
+    TRAINING_MAX_FILES = 5374
+    is_out_of_distribution = feats.get("num_files", 0) > TRAINING_MAX_FILES * 1.2
+
     X = np.array([[feats.get(c, 0) for c in feature_cols]])
     prediction = model.predict(X)[0]
     proba = model.predict_proba(X)[0]
     verdict = "malicious" if prediction == 1 else "benign"
     confidence = float(proba[1] if prediction == 1 else proba[0])
 
+    AST_DISPLAY_KEYS = {"ast_num_dangerous_builtin_calls", "ast_num_getattr_obfuscation",
+                         "ast_num_dynamic_calls", "ast_num_high_entropy_strings"}
     flagged_indicators = [
         {"key": k, "label": FEATURE_LABELS.get(k, k)}
         for k in feats if k.startswith("has_") and feats[k] == 1 and k in SUSPICIOUS_PATTERNS
+    ] + [
+        {"key": k, "label": FEATURE_LABELS.get(k, k)}
+        for k in AST_DISPLAY_KEYS if feats.get(k, 0) > 0
     ]
 
     return {
@@ -497,6 +527,7 @@ def build_verdict_response(feats, package_name, version, author, summary):
         "version": version,
         "author": author,
         "summary": summary,
+        "out_of_distribution": is_out_of_distribution,
         "verdict": verdict,
         "confidence": round(confidence * 100, 1),
         "flagged_indicators": flagged_indicators,
