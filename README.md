@@ -6,7 +6,7 @@ extensive battery of experiments including cross-ecosystem generalization, adver
 evasion robustness, temporal validation, and a matched comparison against a Cerebro-inspired
 baseline. Deployed as a live, public web application.
 
-**Live demo:** https://malware-classifier-4fw4.onrender.com
+**Live demo:** https://rahat239.github.io/Malware-classifier/
 
 ## Headline Results
 
