@@ -79,7 +79,7 @@ If you use this work, please cite:
 
 ```bibtex
 @misc{pypiguard2026,
-  title={Detecting Malicious PyPI Packages Using Machine Learning on Package Metadata and Code-Level Features},
+  title={PyPIGuard: A Lightweight, Explainable Machine Learning Tool for Pre-Install Detection of Malicious PyPI Packages},
   author={Rahat Ahmed},
   year={2026},
   howpublished={\url{https://github.com/rahat239/PyPIguard-Research}}
