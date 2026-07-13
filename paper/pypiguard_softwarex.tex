@@ -16,6 +16,7 @@
 
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{xurl}
 \usepackage{graphicx}
 \setlength{\parindent}{0pt}
 
@@ -32,7 +33,7 @@
 \address{Department of Computer Science and Engineering, BRAC University, Dhaka, Bangladesh}
 
 \begin{abstract}
-Open-source package registries such as PyPI are increasingly targeted by attackers, yet existing detection tools report false-positive rates as high as 97\%, making automated adoption impractical. PyPIGuard is an open-source, deployable tool that classifies PyPI packages as malicious or benign within a millisecond, using only static code, Abstract Syntax Tree (AST), and bytecode-level structural features -- without relying on a large language model (LLM). It is deployed as a live web application with a real-time scanner, a file-upload scanner, and a Jupyter notebook malware-import scanner. Trained on 9,723 real packages -- the entire available malicious archive plus freshly-sampled benign packages -- it achieves 0.9993 ROC-AUC on held-out data and 0.984 ROC-AUC on packages discovered after the training cutoff, remaining robust under adversarial evasion testing.
+Open-source package registries such as PyPI are increasingly targeted by attackers, yet a benchmark study of deployed detection tools reports false-positive rates between 15\% and 97\%, well above the near-zero tolerance PyPI maintainers require for automated adoption [6]. PyPIGuard is an open-source, deployable tool that classifies PyPI packages as malicious or benign using only static code, Abstract Syntax Tree (AST), and bytecode-level structural features -- without relying on a large language model (LLM) or executing the package. It is deployed as a live web application with a real-time scanner, a file-upload scanner, and a Jupyter notebook malware-import scanner. Trained on 9,723 real packages -- the entire available malicious archive plus freshly-sampled benign packages -- it achieves 0.9993 ROC-AUC and a 0.95 precision / 0.99 recall on the malicious class on independent held-out data, with a median model-inference time of 0.18 ms per package, remaining robust under adversarial evasion and temporal-generalization testing.
 \end{abstract}
 
 \begin{keyword}
@@ -47,7 +48,7 @@ malware detection \sep software supply chain security \sep machine learning \sep
 \section*{Current code version}
 \label{}
 
-\begin{table}[!h]
+\begin{table}[htbp]
 \begin{tabular}{|l|p{6.5cm}|p{6.5cm}|}
 \hline
 \textbf{Nr.} & \textbf{Code metadata description} & \textbf{Please fill in this column} \\
@@ -79,60 +80,93 @@ C8 & Support email for questions & rahatahmed537@gmail.com \\
 
 \item Motivation and significance
 
-Open-source package registries such as PyPI are foundational to modern software development, but they are increasingly targeted by attackers who publish malicious packages -- often through typosquatting popular libraries such as \texttt{beautifulsoup4}, \texttt{matplotlib}, and \texttt{requests} -- to compromise developers who install them. In the real \texttt{event-stream} incident (2018), an attacker was granted maintainer access to a popular package simply by offering to help maintain it, and the compromised package reached over 1,600 downstream projects before discovery. Detection today remains largely manual and reactive: packages are typically investigated and removed only after they have already been downloaded and reported by victims.
+Open-source package registries such as PyPI are foundational to modern software development, but they are increasingly targeted by attackers who publish malicious packages -- often through typosquatting popular libraries such as \texttt{beautifulsoup4}, \texttt{matplotlib}, and \texttt{requests}. In the real \texttt{event-stream} incident (2018) [2], an attacker was granted maintainer access to a popular package simply by offering to help maintain it, and the compromised package reached over 1,600 downstream projects before discovery.
 
-Existing academic detection approaches sit at two extremes: lightweight metadata-only classifiers that are easily gamed once attackers adapt, or heavyweight deep-learning behavioral models (e.g., Cerebro, requiring 14--25 hours of training time) that are impractical for real-time, pre-install scanning. Documented false-positive rates in existing tools range from 15\% to 97\%, and PyPI maintainers report that automated tools require near-zero false-positive rates before they can be trusted for routine use.
+Existing approaches sit at two extremes, leaving a gap PyPIGuard targets. Lightweight metadata-only classifiers are fast but easily gamed once attackers adapt. Heavyweight behavioral models -- e.g., Cerebro [3], requiring 14--25 hours of training and reporting an 81.5\% false-positive rate on PyPI in its own evaluation -- are too slow or imprecise for real-time, pre-install scanning. Vu et al.'s benchmark [6] found 15--97\% false-positive rates across deployed PyPI scanners, and reports administrators consider rates above $\sim$0.01\% operationally unacceptable given daily release volume.
 
-PyPIGuard addresses this gap directly: a static-analysis classifier fast enough for real-time use (sub-millisecond inference), explainable at the level of individual predictions, and validated through an extensive experimental battery -- including cross-ecosystem generalization, adversarial evasion robustness, and temporal validation against evolving attacker techniques -- rather than a single reported accuracy figure. The tool builds on the dataset released with Zhang et al.'s empirical study of the PyPI malicious-code ecosystem (ASE 2023) and PyPI's own official package index.
+\textbf{The gap PyPIGuard addresses:} a static-analysis classifier simultaneously fast enough for real-time use, explainable per-prediction, and validated against adversarial evasion, temporal drift, and cross-ecosystem transfer -- none jointly reported for the tools in [6]. It is built on the dataset released with [1] and PyPI's official index.
+
+In practical terms: a developer supplies a package name, archive, or notebook; PyPIGuard analyzes it without executing it and returns a CLEARED/FLAGGED verdict, a confidence score, and the specific patterns that drove the decision.
 
 \item Software description
 
 \begin{enumerate}
-    \item \textbf{Software architecture.} PyPIGuard consists of three layers: (1) a feature-extraction layer that parses a package's source distribution using regular-expression pattern matching, Python's \texttt{ast} module, and \texttt{compile()}-based bytecode inspection (35 features total, none requiring code execution); (2) a classification layer, a Random Forest classifier trained on 9,723 labeled packages; and (3) a delivery layer -- a Flask web application exposing three interfaces: a live package-name scanner that queries PyPI's official API, a local-archive-file scanner (\texttt{.tar.gz}/\texttt{.zip}/\texttt{.whl}), and a Jupyter notebook scanner that extracts and checks every \texttt{import} and \texttt{pip install} statement in an uploaded \texttt{.ipynb} file. A verified-lookup layer additionally returns instant, ground-truth-backed verdicts for the 5,900 packages in the training/validation corpus itself, clearly distinguished in the interface from live model predictions.
+    \item \textbf{Software architecture.} Figure~\ref{fig:architecture} shows the end-to-end pipeline. A submitted package is first checked against a \textbf{verified-lookup table} of 5,900 packages with ground-truth labels; if found, an instant dataset-backed verdict is returned, visually marked ``verified'' rather than model-predicted. Otherwise, three sequential stages run: (1) a \textbf{feature-extraction layer} retrieves the source (or accepts a local upload) and computes 35 static features via regex, Python's \texttt{ast} module, and \texttt{compile()}-based bytecode inspection, none requiring execution; (2) a \textbf{classification layer} -- a single Random Forest classifier -- outputs a prediction and confidence score; (3) a \textbf{delivery layer} (Flask) formats the verdict with a SHAP [8] explanation and flagged patterns. An \textbf{out-of-distribution safety gate} between (2) and (3) flags verdicts as unreliable when a package's size falls far outside the training range, a behavior added after deployment testing (Section 4).
 
-    \item \textbf{Software functionalities.} Core functionality includes: real-time malicious/benign classification with a confidence score; per-prediction explanation via SHAP, listing the specific code patterns (e.g., \texttt{eval()} usage, install-time script hooks, obfuscated string blobs) that drove a verdict; safe archive extraction hardened against path-traversal (``zip-slip'') attacks, verified against a crafted adversarial test archive; and a bytecode-level structural detector that identifies obfuscated dangerous-function calls (e.g., \texttt{getattr(\_\_builtins\_\_, ...)}) independent of the specific string-construction technique used to hide them.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=4.5in]{architecture_diagram_v3.png}
+\caption{PyPIGuard architecture. Solid arrows: live analysis path. Dashed arrow: verified-lookup shortcut.}
+\label{fig:architecture}
+\end{figure}
 
-    \item \textbf{Sample code snippets.} Feature extraction and classification reduce to:
+    \item \textbf{Software functionalities.} Three input modes share one verdict format. \textit{Package-name scanning} downloads and analyzes a package live via PyPI's API. \textit{Archive-file scanning} accepts a local \texttt{.tar.gz}/\texttt{.zip}/\texttt{.whl} directly -- useful for historical malware PyPI has since removed. Extraction is hardened against path-traversal (``zip-slip'') attacks, validated against a crafted adversarial archive. \textit{Notebook scanning} parses every \texttt{.ipynb} code cell, extracts \texttt{import}/\texttt{pip install} references, excludes Python's $\sim$300 standard-library modules, resolves import-to-distribution mismatches (e.g., \texttt{cv2}$\to$\texttt{opencv-python}), and reports how many referenced packages are known or suspected malware before execution. Every verdict includes a CLEARED/FLAGGED label, confidence, flagged patterns (e.g., \texttt{eval()} usage, \texttt{setup.py} \texttt{cmdclass} hooks, high-entropy blobs), and a bytecode-level detector for calls like \texttt{getattr(\_\_builtins\_\_,...)} that identifies dynamic dangerous-function invocation independent of the string-construction technique used to hide it. Current limitations: no dynamic/execution-based analysis, and reduced reliability for packages structurally far larger than the training data (flagged via the safety gate above).
+
+    \item \textbf{Sample code snippets.} A representative scan:
 \begin{verbatim}
-from ast_features import extract_ast_features
-feats = {**regex_features(source), 
-          **extract_ast_features(source)}
-verdict = model.predict([feats])
+import ast_features, regex_features, joblib
+feats = {**regex_features.extract(source_dir),
+         **ast_features.extract_ast_features(source_dir)}
+model = joblib.load("final_integrated_model.joblib")
+proba = model.predict_proba([feats])[0]
+verdict = "malicious" if proba[1] > 0.5 else "benign"
+explanation = shap_explainer(feats)
 \end{verbatim}
+The web application wraps this pipeline behind the three input modes; full implementation is in the code repository (C2).
 \end{enumerate}
 
 \item Illustrative examples
 
-A user submits a package name (e.g., \texttt{requests}) or uploads a local archive through the web interface. The tool downloads (if applicable) and statically analyzes the package, returning a stamped verdict -- CLEARED or FLAGGED -- with a confidence percentage and a list of specific suspicious indicators (Figure~\ref{fig:confusion}). For notebook scanning, a user uploads a \texttt{.ipynb} file; the tool parses every code cell, extracts referenced packages (correctly excluding Python's 300 standard-library modules and resolving common import-to-distribution-name mismatches, e.g. \texttt{cv2} $\to$ \texttt{opencv-python}), and reports how many of the referenced packages are known or suspected malware before the notebook is ever executed.
+A user submits a package name (e.g., \texttt{requests}) or uploads a local archive through the web interface. Figure~\ref{fig:screenshots}(a) shows the resulting interface for \texttt{requests}: a stamped CLEARED verdict at 54.7\% confidence and the flagged code patterns contributing to it -- the same package and confidence-calibration case discussed in Section 4. Figure~\ref{fig:screenshots}(b) shows the notebook-upload interface alongside a verified-lookup result: a known-malicious package (\texttt{selfcraftint}) instantly flagged at 100\% confidence from the dataset-backed lookup table described in Section 2, together with the interface's stated limitations.
 
-\begin{figure}[!h]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.7\textwidth]{final_integrated_confusion_matrix.png}
-\caption{Confusion matrix on the independent, leakage-verified 400-package held-out validation set.}
-\label{fig:confusion}
-\end{figure}
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.7\textwidth]{phase4_shap_summary.png}
-\caption{SHAP global feature-importance summary, illustrating the explainability layer.}
-\label{fig:shap}
+\includegraphics[width=3.4in]{screenshot_scan_result.png}\\[3pt]
+\small (a) Package scan result (\texttt{requests})\\[6pt]
+\includegraphics[width=3.4in]{screenshot_notebook_result.png}\\[3pt]
+\small (b) Notebook upload \& verified-lookup result
+\caption{PyPIGuard web interface: (a) live scan of \texttt{requests}, showing the CLEARED verdict, confidence score, and flagged patterns discussed in Section 4; (b) notebook-scanning upload widget and a verified-lookup verdict for a known-malicious training-set package.}
+\label{fig:screenshots}
 \end{figure}
 
 \item Impact
 
-PyPIGuard will build on the current knowledge base in three ways. First, it demonstrates that with the sole feature set (regex + AST + bytecode-level structure) it can achieve 0.9993 ROC-AUC at scale and can be easily explained and executed in less than a millisecond, which is a viable alternative to easily-gamed metadata classifiers or deep-learning behavioral models. Second, most of the previous releases of this type of tool have used only a small number of robustness tests, and this release introduces three of them into the tool: adversarial evasion testing (where AST/bytecode integration brought the susceptibility gap down from 9 to 2 percent, though the remaining 2 percent is a limitation worth addressing in future work), temporal validation (which has an ROC-AUC of 0.984 on packages discovered after the training cutoff), and cross-ecosystem testing (which has an ROC-AUC of 0.818 between PyPI and npm, confirmed across two dataset scales so it isn't a small-sample effect, and shows the detection features generalize only partially rather than completely). Third, unlike most academic detection prototypes, PyPIGuard is publicly available as a live web tool (not just a reported metric) which any developer, student, or researcher can test directly, even with actual malware that is no longer available on the live PyPI registry, as PyPI removes malicious packages after they are detected. This enables new research into other interpreted-language ecosystems than the one we focus on here in which we learn structure at the AST/bytecode level, and whether the sequence-order information learned in this study, with Cerebro-inspired proxy comparison, can be successfully used in conjunction with fast tabular-based PyPIGuard, without impacting on the runtime.
+\textbf{Evaluation methodology.} The final model was trained on 9,723 labeled packages (7,960 malicious, 1,763 benign; ``at scale'' refers to this set, covering the entire available archive from [1], a $\sim$3.9$\times$ increase over an earlier 2,500-sample version) and validated using 5-fold \textbf{GroupKFold} cross-validation, with an independent 400-package held-out set reported here (zero package-name overlap, verified programmatically). Groups were defined by typosquat family rather than by individual package: malicious samples that are near-duplicate variants of the same base package (e.g., dozens of typosquats of \texttt{requests}) are grouped together so near-duplicates never split across train and test, which a naive random or single-package-based split would not prevent. Results: 0.9993 ROC-AUC, 0.9993 PR-AUC, 0.95 precision, 0.99 recall on the malicious class (Figure~\ref{fig:results}a).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=3.17in]{final_integrated_confusion_matrix_v3.png}\\[2pt]
+\small (a) Confusion matrix\\[8pt]
+\includegraphics[width=3.4in]{phase4_shap_summary_v4.png}\\[2pt]
+\small (b) SHAP summary
+\caption{(a) Confusion matrix, held-out set: 189/200 benign correctly cleared (11 FP), 199/200 malicious correctly flagged (1 FN). (b) SHAP global feature importance (top 10 features): horizontal position shows impact on model output, color shows feature value.}
+\label{fig:results}
+\end{figure}
+
+\textbf{Robustness.} \textit{Temporal}: training only on packages dated before a fixed cutoff and testing exclusively on later packages yields 0.984 ROC-AUC, confirming generalization to malware discovered after training. \textit{Adversarial evasion}: 100 detected malicious packages were paired with behavior-preserving disguises -- e.g., rewriting a direct \texttt{eval(x)} call as an equivalent \texttt{getattr}-based indirection that evades a literal string match. The \textbf{susceptibility gap} -- the fraction of these that evade re-detection -- fell from 9\% (regex-only) to 2\% (AST + bytecode features), an improvement but not a complete fix, reported as a limitation. \textit{Cross-ecosystem}: applying the PyPI-trained model unretrained to real npm packages gives 0.818 ROC-AUC (vs.\ 0.999 in-ecosystem), confirmed consistent at both 2,500- and 9,723-sample scales (0.815 vs.\ 0.818, hence ``across two dataset scales''); recall drops to 0.54, so PyPIGuard should not be deployed on npm without retraining.
+
+For context, Cerebro [3] reports an 81.5\% false-positive rate on PyPI in its own evaluation; PyPIGuard's held-out false-positive rate is 5.5\%. MalGuard [4] reports 91.0\% precision and 94.0\% recall in its own evaluation (independently reproduced by a third-party comparison study); PyPIGuard's held-out precision and recall (95\%, 99\%) exceed both figures. Neither comparison is head-to-head on identical data -- both baselines use their own evaluation datasets -- but together they indicate PyPIGuard operates in a substantially different, more conservative operating regime than either representative baseline.
+
+\textbf{Explainability.} Figure~\ref{fig:results}b shows SHAP global feature importance for the top 10 features. \texttt{suspicious\_indicator\_count} (the aggregate count of triggered regex-based patterns) is the single most influential feature, followed by \texttt{num\_py\_files}, \texttt{has\_hex\_or\_b64\_blob}, and \texttt{num\_files}: packages triggering more suspicious patterns simultaneously, or containing fewer Python files overall, are pushed toward malicious, consistent with thin, single-purpose typosquats; larger file counts push toward benign, consistent with legitimate packages carrying more supporting files (tests, documentation, packaging metadata) than minimal payloads. This is also the feature-interaction mechanism underlying the version-stability finding above: vendored third-party code inflates \texttt{suspicious\_indicator\_count} independent of a package's own behavior.
+
+\textbf{Latency (deployment-testing finding).} We distinguish three previously conflated measures: \textit{model inference} (0.18~ms median), \textit{feature extraction} (0.2--1~ms), and \textit{end-to-end scanning} (PyPI network round-trip plus hosting overhead). A reviewer-observed $\sim$20s scan of \texttt{requests} is attributable entirely to download time and free-tier hosting cold-start, not model inference, which stays sub-millisecond; this is now stated as an explicit deployment limitation.
+
+\textbf{Confidence calibration (deployment-testing finding).} \texttt{requests} was classified benign at 54.3\% confidence during reviewer testing (54.7\% on our own re-verification of the same version, confirming stability across repeated scans) -- correct, but near the decision boundary. Random Forest probability estimates are not calibrated probabilities: bagging averages predictions across trees with high individual variance, which is established to bias ensemble predictions away from the extremes (near 0 or 1) toward the middle of the range [7], independent of any single input's characteristics. We additionally tested version stability directly: scanning five real \texttt{requests} releases spanning 2011--2026 (v0.2.0, v0.9.2, v2.2.0, v2.17.0, v2.34.2) found 3 of 5 \textbf{misclassified as malicious}, one (v2.17.0) at 93.7\% confidence. Investigating the cause, we found these releases bundle vendored copies of their own dependencies (e.g., urllib3, chardet) directly in the source tree, an older packaging convention; this vendored third-party code triggers multiple suspicious-pattern features cumulatively (including a genuine match on our \texttt{getattr} obfuscation detector in v2.2.0's vendored code), inflating the aggregate suspicious-indicator count regardless of \texttt{requests}' own code. This reveals a genuine construct-validity limitation, not merely a confidence-calibration nuance: PyPIGuard's current static features cannot distinguish a package's own suspicious behavior from suspicious patterns present in legitimately vendored third-party code, and this is reported here as an identified limitation rather than a solved problem. The current version (v2.34.2, no longer vendoring dependencies) and one older version (v0.9.2) are both classified correctly; the size-based explanation offered for the single-version case above (85 files/390,307 characters vs.\ a training median of 16/19,431) remains a contributing but not sole factor. A path-traversal (``zip-slip'') vulnerability, found and patched via a crafted adversarial test archive prior to deployment, is documented here for the same transparency reason.
+
+\textbf{Practical impact.} Intended users are developers, students, and CI/CD pre-install gates deciding whether to install a dependency. A false negative risks installing malware; a false positive costs a manual review. Given the 5.5\% FP / 0.5\% FN rates and explicit uncertainty flagging, PyPIGuard is a decision-support triage tool, not an autonomous blocker. It is deployed as a public, live tool (Section 5), testable against real historical malware no longer on the live registry, since PyPI removes malicious packages once discovered.
+
+\textbf{Future work} includes extending static learning to other ecosystems beyond the partial PyPI-to-npm transfer above, and combining PyPIGuard's tabular features with sequence-order information -- a separate matched comparison found a simplified Cerebro-inspired [3] sequence proxy modestly outperforming PyPIGuard (0.983 vs.\ 0.967 ROC-AUC), suggesting sequence information carries signal the flat feature vector misses.
 
 \item Conclusions
 
-PyPIGuard is an open-source, deployed, explainable tool for the real-time detection of malicious PyPI packages, which has an unusually large experimental battery of tests, including tests for temporal and cross-ecosystem robustness, that aren't often reported together in prior research. It shows that a static, LLM-free analysis approach is not only viable but also measurably improvable, while also clearly identifying limitations to it -- the fact that its transfer to other ecosystems is only partial, that it leaves certain adversarial attack surfaces uncovered, and that it deliberately avoids the harder task of dynamic/behavioral analysis while it waits to be enabled by the availability of well-isolated execution infrastructure.
+PyPIGuard is an open-source, deployed, explainable tool for pre-install detection of malicious PyPI packages, validated through temporal, cross-ecosystem, and adversarial-evasion testing not typically reported together for tools of this scope. It shows that a static, LLM-free analysis approach operates in a substantially different false-positive regime than a benchmarked deep-learning baseline [3], while transparently reporting its boundaries: cross-ecosystem transfer is only partial, adversarial evasion is reduced but not eliminated, static analysis alone leaves dynamic/behavioral attack surfaces uncovered pending access to properly isolated execution infrastructure, and the current free-tier deployment does not represent production-grade latency despite sub-millisecond model inference.
 
 \end{enumerate}
 
 \section*{Acknowledgements}
 \label{}
 
-The author thanks the maintainers of the \texttt{pypi\_malregistry} dataset (Zhang et al., ASE 2023) and the Datadog Security Labs malicious-software-packages dataset, both of which made this work possible.
+The author thanks the maintainers of the \texttt{pypi\_malregistry} dataset [1] and the Datadog Security Labs malicious-software-packages dataset [5], both of which made this work possible.
 
 \section*{Declaration of Generative AI and AI-assisted technologies in the writing process}
 \label{}
@@ -141,11 +175,14 @@ During the preparation of this work, the author used ChatGPT (OpenAI) to assist 
 
 \begin{thebibliography}{00}
 
-\bibitem{malregistry} An Empirical Study of Malicious Code In PyPI Ecosystem, ASE, 2023.
+\bibitem{malregistry} W. Guo, Z. Xu, C. Liu, C. Huang, Y. Fang, Y. Liu, An Empirical Study of Malicious Code In PyPI Ecosystem, in: Proceedings of the 38th IEEE/ACM International Conference on Automated Software Engineering (ASE), IEEE, 2023, pp. 166--177.
 \bibitem{backstabber} M. Ohm, H. Plate, A. Sykosch, M. Meier, Backstabber's Knife Collection: A Review of Open Source Software Supply Chain Attacks, DIMVA, 2020.
-\bibitem{cerebro} Zhang et al., Killing Two Birds with One Stone: Malicious Package Detection in NPM and PyPI Using a Single Model of Malicious Behavior Sequence, ACM TOSEM.
+\bibitem{cerebro} J. Zhang, K. Huang, B. Chen, C. Wang, Z. Tian, X. Peng, Killing Two Birds with One Stone: Malicious Package Detection in NPM and PyPI Using a Single Model of Malicious Behavior Sequence, ACM Transactions on Software Engineering and Methodology, 2025.
 \bibitem{malguard} X. Gao et al., MalGuard: Towards Real-Time, Accurate, and Actionable Detection of Malicious Packages in PyPI Ecosystem, USENIX Security, 2025.
 \bibitem{datadog} Malicious Software Packages Dataset, Datadog Security Labs, 2023.
+\bibitem{wyss} D.-L. Vu, Z. Newman, J.S. Meyers, A Benchmark Comparison of Python Malware Detection Approaches, arXiv:2209.13288, 2022.
+\bibitem{calibration} A. Niculescu-Mizil, R. Caruana, Predicting Good Probabilities With Supervised Learning, in: Proceedings of the 22nd International Conference on Machine Learning (ICML), 2005, pp. 625--632.
+\bibitem{shap} S.M. Lundberg, S.-I. Lee, A Unified Approach to Interpreting Model Predictions, in: Advances in Neural Information Processing Systems 30 (NeurIPS), 2017, pp. 4765--4774.
 
 \end{thebibliography}
 
