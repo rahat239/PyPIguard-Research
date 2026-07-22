@@ -1,0 +1,401 @@
+package_name,true_label,source,osv_confirmed,guarddog_issues_any,guarddog_flagged_defA_any_rule,guarddog_flagged_defB_threat_only,firing_rules
+tpramosintpost,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+esqvmnvidiacraft,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+requset,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,capability-filesystem-read;capability-network-outbound;capability-filesystem-delete;capability-network-download;capability-process-spawn;threat-filesystem-read;threat-process-hooks
+esqramreplacestudy,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+coolstyle,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+aioconsol,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-filesystem-write-executable;threat-runtime-obfuscation-general;capability-process-spawn
+selfvirtualstrsuper,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+tpgetultrapaypal,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+prooftool,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+gamepyw,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+pandaas,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+libsuperkilllib,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+libcontrolguipyw,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+multiconnects,malicious,recovered_local_archive (pypi_malregistry),True,7,True,True,capability-filesystem-read;threat-process-download-exec;capability-network-outbound;threat-setup-suspicious-imports;capability-process-spawn;capability-network-download;threat-setup-network-in-install
+libstrget,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+tpcandyminead,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+strinfo,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+wev3-py,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-setup-suspicious-imports;capability-process-hooks
+superint,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+mcurl,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+tpguigetgui,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+bh-25-req-ase,malicious,recovered_local_archive (pypi_malregistry),True,6,True,True,capability-filesystem-read;threat-network-exfiltration;capability-network-outbound;threat-network-outbound-shady-links;threat-filesystem-read;capability-network-download
+adgame,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+pjllow,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-hooks;capability-process-spawn;threat-setup-suspicious-imports
+xsetuptools,malicious,recovered_local_archive (pypi_malregistry),False,4,True,True,capability-network-outbound;threat-network-exfil-sysinfo;capability-network-download;capability-process-spawn
+w3eb,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-setup-suspicious-imports;capability-process-hooks
+recontrol,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+fefeefrrg,malicious,recovered_local_archive (pypi_malregistry),True,15,True,True,capability-filesystem-delete;threat-network-exfiltration;threat-setup-suspicious-imports;threat-network-outbound-shady-links;threat-setup-network-in-install;capability-process-hooks;threat-runtime-obfuscation;threat-process-injection-dll;capability-filesystem-browser;threat-process-download-exec;capability-filesystem-read;capability-filesystem-write-executable;capability-network-download;capability-process-spawn;threat-runtime-keylogging
+broooxddd1414,malicious,recovered_local_archive (pypi_malregistry),True,2,True,False,capability-process-spawn;capability-process-hooks
+websocket-cleint,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+py-toolkill,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+progressbaar2,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+lgtbcraft,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+minepep,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+py-urlcandypy,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+byted-df,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,capability-network-download;threat-network-exfil-sysinfo;capability-filesystem-read;capability-network-outbound
+redist,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,capability-network-download;capability-process-hooks;threat-setup-network-in-install;threat-setup-suspicious-imports;capability-process-spawn;capability-network-outbound;threat-process-download-exec
+sanic-prometheus-qubit,malicious,recovered_local_archive (pypi_malregistry),False,9,True,True,capability-network-download;threat-setup-suspicious-imports;threat-network-exfiltration;threat-runtime-system-info;threat-network-exfil-sysinfo;threat-setup-network-in-install;capability-network-outbound;threat-network-outbound-shady-links;capability-process-hooks
+selfmaskpong,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+libkillping,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+pywool,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;capability-process-hooks;threat-runtime-obfuscation-general
+pypackagescraping,malicious,recovered_local_archive (pypi_malregistry),True,15,True,True,threat-process-cryptomining;threat-runtime-keylogging;capability-filesystem-delete;threat-runtime-screencapture;threat-network-exfil-sysinfo;capability-filesystem-browser;threat-network-exfiltration;capability-network-download;capability-filesystem-read;threat-network-outbound-shady-links;capability-network-outbound;threat-filesystem-read;capability-runtime-clipboard;threat-process-download-exec;capability-process-spawn
+py-cvvisacpu,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+bobotosoji,malicious,recovered_local_archive (pypi_malregistry),True,2,True,False,capability-process-spawn;capability-process-hooks
+pymulticolor,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,threat-runtime-obfuscation-base64exec;threat-runtime-obfuscation-general;capability-filesystem-write-executable;capability-process-spawn
+tpnvidiasplit,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+cvpaypal,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+crpt,malicious,recovered_local_archive (pypi_malregistry),True,5,True,True,capability-filesystem-read;capability-process-spawn;capability-network-outbound;capability-network-download;threat-process-download-exec
+selfhydrahydrasplit,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+openseaa,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-hooks;capability-process-spawn;threat-setup-suspicious-imports
+eautifulsoup4,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,threat-setup-suspicious-imports;threat-setup-network-in-install;capability-process-hooks;capability-process-spawn;capability-network-download;capability-network-outbound;threat-process-download-exec
+ethertoolz,malicious,recovered_local_archive (pypi_malregistry),True,11,True,True,capability-filesystem-read;capability-network-outbound;threat-network-exfil-sysinfo;capability-process-spawn;threat-runtime-screencapture;capability-network-download;threat-network-outbound-shady-links;threat-network-exfil-messenger;capability-filesystem-delete;capability-filesystem-browser;threat-network-exfiltration
+threeding,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,threat-setup-network-in-install;capability-process-spawn;capability-network-outbound;threat-process-download-exec;threat-setup-suspicious-imports;capability-process-hooks;capability-network-download
+selfosintget,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+nukeport,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,threat-process-download-exec;capability-network-outbound;capability-network-download;capability-process-spawn
+pullpaypal,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+yfinacne,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+py-pongtoolkill,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+ebautifulsoup,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+tpvirtualramget,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+prompt-tookit,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+py-minepyencode,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+Sjimplejson,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-process-spawn;capability-process-hooks;threat-setup-suspicious-imports
+esqgrandproofhydra,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+hironobunigo,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,capability-network-outbound;threat-network-exfil-sysinfo;capability-process-spawn;capability-network-download
+intelcraft,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+requestlogger,malicious,recovered_local_archive (pypi_malregistry),True,10,True,True,threat-process-download-exec;capability-network-download;capability-filesystem-read;capability-process-spawn;threat-runtime-obfuscation-base64exec;capability-process-hooks;capability-filesystem-write-executable;threat-setup-network-in-install;capability-network-outbound;threat-setup-suspicious-imports
+quixstreaming,malicious,recovered_local_archive (pypi_malregistry),False,9,True,True,threat-network-outbound-shady-links;threat-setup-network-in-install;threat-network-exfiltration;threat-runtime-system-info;threat-setup-suspicious-imports;threat-network-exfil-sysinfo;capability-process-hooks;capability-network-download;capability-network-outbound
+screencaptned,malicious,recovered_local_archive (pypi_malregistry),True,8,True,True,threat-network-outbound-shady-links;capability-process-spawn;capability-network-download;capability-filesystem-read;threat-network-exfiltration;threat-process-download-exec;capability-filesystem-delete;capability-network-outbound
+selfloadedpy,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+esqstrsplitmask,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+controltool,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+grandver,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+libpipkillre,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+tikinters,malicious,recovered_local_archive (pypi_malregistry),True,2,True,True,threat-runtime-obfuscation-import-exec;capability-process-spawn
+libpongkillad,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+py-hackedmaskvirtual,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+libvisacvcontrol,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+robloxpinreader,malicious,recovered_local_archive (pypi_malregistry),False,2,True,True,threat-runtime-obfuscation-chr;capability-process-spawn
+libproofultrasplit,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+Simplejsoj,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-process-spawn;threat-setup-suspicious-imports;capability-process-hooks
+minead,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+cick,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+randkill,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+threading-helper,malicious,recovered_local_archive (pypi_malregistry),True,6,True,True,threat-setup-suspicious-imports;threat-setup-network-in-install;capability-process-hooks;capability-network-download;capability-network-outbound;threat-network-exfil-sysinfo
+customtkjnter,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-process-hooks;threat-setup-suspicious-imports;capability-process-spawn
+py-vmmc,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+firefoxupdate,malicious,recovered_local_archive (pypi_malregistry),False,2,True,True,capability-process-spawn;threat-runtime-obfuscation-base64exec
+wb3,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-hooks;capability-process-spawn;threat-setup-suspicious-imports
+maskhttp,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+forenitq,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,capability-process-spawn;threat-runtime-obfuscation-import-exec;capability-filesystem-read;threat-runtime-dynamic-loader
+selfcontrolstr,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+ppandas,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+selfpyintpaypal,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+py-visaurlre,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+postproof,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+libpywedosint,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+reallydonothing,malicious,recovered_local_archive (pypi_malregistry),True,7,True,True,capability-network-outbound;threat-setup-suspicious-imports;capability-filesystem-write-executable;capability-process-hooks;capability-network-download;capability-process-spawn;threat-setup-network-in-install
+yzip,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-filesystem-write-executable;capability-process-spawn
+oenesea,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-hooks;threat-setup-suspicious-imports;capability-process-spawn
+glovo-data-platform-declarative,malicious,recovered_local_archive (pypi_malregistry),True,2,True,True,capability-filesystem-read;threat-network-outbound-shady-links
+py-osintminehttp,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+py-coordd,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-hooks;threat-setup-suspicious-imports;capability-process-spawn
+boogishell,malicious,recovered_local_archive (pypi_malregistry),False,4,True,True,capability-process-spawn;capability-process-hooks;threat-process-hooks;threat-network-reverse-shell
+SimpleCalc-2022,malicious,recovered_local_archive (pypi_malregistry),False,10,True,True,capability-network-outbound;threat-process-download-exec;threat-filesystem-read;threat-setup-suspicious-imports;capability-filesystem-read;capability-filesystem-delete;capability-process-spawn;threat-network-exfiltration;threat-setup-network-in-install;capability-network-download
+selfproofpullsplit,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+tpcontrolloadcv,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+pyinstalller,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+Pygamm,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-process-spawn;threat-setup-suspicious-imports;capability-process-hooks
+libvmrand,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+rdquests,malicious,recovered_local_archive (pypi_malregistry),False,6,True,True,capability-filesystem-read;capability-process-spawn;capability-network-outbound;threat-network-exfiltration;threat-process-download-exec;capability-network-download
+telstra,malicious,recovered_local_archive (pypi_malregistry),True,6,True,True,capability-network-download;threat-network-outbound-shady-links;threat-process-sysinfo;threat-network-exfil-sysinfo;capability-network-outbound;threat-network-exfiltration
+pulsecord,malicious,recovered_local_archive (pypi_malregistry),True,6,True,True,threat-process-download-exec;capability-network-outbound;threat-runtime-obfuscation-unicode;capability-network-download;threat-process-spawn-silent;capability-process-spawn
+ga3fario,malicious,recovered_local_archive (pypi_malregistry),True,7,True,True,threat-network-exfiltration;capability-process-hooks;capability-network-outbound;threat-setup-suspicious-imports;threat-network-exfil-messenger;threat-network-outbound-shady-links;threat-setup-network-in-install
+libsplitrandomencode,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+httptool,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+nvidiaurl,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+tpvirtualpywproof,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+libstr,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+mybiubiubiu,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-filesystem-read;threat-setup-suspicious-imports;threat-network-exfiltration
+nvidiatool,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+libpushgrand,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+promtp-toolkit,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+scikit-elarn,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+ramhttp,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+selfpaypalram,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+selfguiget,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+promogen,malicious,recovered_local_archive (pypi_malregistry),True,12,True,True,threat-network-outbound-shady-links;capability-filesystem-browser;capability-filesystem-delete;capability-process-spawn;threat-setup-suspicious-imports;threat-filesystem-read;capability-network-download;threat-network-exfil-messenger;capability-filesystem-read;capability-network-outbound;threat-setup-network-in-install;threat-network-exfiltration
+libpinggetcc,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+requesgs,malicious,recovered_local_archive (pypi_malregistry),True,7,True,True,capability-network-download;threat-setup-network-in-install;capability-process-spawn;threat-setup-suspicious-imports;capability-network-outbound;capability-process-hooks;threat-process-download-exec
+libreplacepywpip,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+libgrandpong,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+websocets,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+capmonstercloudclientt,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-setup-suspicious-imports;capability-process-hooks;capability-process-spawn
+mastowrapper,malicious,recovered_local_archive (pypi_malregistry),False,3,True,False,capability-filesystem-read;capability-network-download;capability-network-outbound
+urlurl,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+cryptocompaer,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+py-pepminecpu,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+Matplottib,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,capability-process-spawn;capability-process-hooks;threat-setup-suspicious-imports
+pycordwd,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-setup-suspicious-imports;capability-process-hooks;capability-process-spawn
+pullow,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-hooks;capability-process-spawn;threat-setup-suspicious-imports
+minis-sdk,malicious,recovered_local_archive (pypi_malregistry),True,9,True,True,threat-runtime-enumeration;capability-process-hooks;capability-network-outbound;threat-setup-suspicious-imports;threat-setup-network-in-install;threat-runtime-system-info;capability-filesystem-read;capability-process-spawn;capability-filesystem-delete
+tppushpingpy,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+django-metamask-aut,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,capability-network-download;capability-network-outbound;capability-process-spawn;threat-setup-network-in-install;threat-setup-suspicious-imports;threat-process-download-exec;capability-process-hooks
+randar303,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,threat-process-download-exec;capability-network-outbound;capability-network-download;capability-process-spawn
+consolecmds,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,capability-network-outbound;threat-network-outbound-shady-links;capability-process-spawn;threat-process-download-exec;capability-network-download;capability-network-lolbas;threat-network-exfiltration
+supergrand,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+libnvidiavmad,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+gameultra,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+ttam-ploy,malicious,recovered_local_archive (pypi_malregistry),True,9,True,True,threat-network-exfiltration;threat-network-outbound-shady-links;capability-process-spawn;threat-network-exfil-sysinfo;capability-network-download;capability-process-hooks;capability-network-outbound;threat-setup-network-in-install;threat-setup-suspicious-imports
+selfintpushhacked,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+httpssp,malicious,recovered_local_archive (pypi_malregistry),True,2,True,True,capability-process-spawn;threat-runtime-obfuscation-import-exec
+matplotlib-requests,malicious,recovered_local_archive (pypi_malregistry),True,5,True,True,threat-setup-suspicious-imports;capability-process-spawn;capability-network-download;capability-network-outbound;threat-runtime-obfuscation-base64exec
+esqnvidiareosint,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+esqcraftvisaproof,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+libcc,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+14cent,malicious,recovered_local_archive (pypi_malregistry),False,8,True,True,capability-network-outbound;threat-setup-network-in-install;threat-network-exfil-sysinfo;capability-filesystem-read;threat-runtime-system-info;threat-network-exfiltration;threat-setup-suspicious-imports;capability-process-hooks
+weorewfoi2393,malicious,recovered_local_archive (pypi_malregistry),True,2,True,False,capability-process-hooks;capability-process-spawn
+reequests,malicious,recovered_local_archive (pypi_malregistry),True,8,True,True,threat-process-cryptomining;capability-process-spawn;threat-process-hooks;threat-filesystem-read;capability-network-download;capability-filesystem-read;threat-process-spawn-silent;capability-network-outbound
+tronhexpy,malicious,recovered_local_archive (pypi_malregistry),True,2,True,False,capability-network-outbound;capability-network-download
+selfkillgameintel,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+xxlsxwriter,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+esqmctoolintel,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+juphelp,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,capability-network-download;capability-network-outbound;threat-process-download-exec;capability-process-spawn
+discord-py-bot,malicious,recovered_local_archive (pypi_malregistry),False,3,True,True,threat-runtime-obfuscation-base64exec;capability-process-spawn;threat-runtime-obfuscation-chr
+esqpullcraftpull,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+urlad,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+rhermann-sdsm,malicious,recovered_local_archive (pypi_malregistry),True,9,True,True,threat-setup-network-in-install;capability-network-outbound;capability-process-hooks;capability-filesystem-read;capability-process-spawn;threat-runtime-enumeration;threat-runtime-system-info;capability-filesystem-delete;threat-setup-suspicious-imports
+py-vmkillencode,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+easytimestamp,malicious,recovered_local_archive (pypi_malregistry),True,7,True,True,threat-process-download-exec;capability-process-spawn;capability-network-lolbas;threat-network-exfiltration;threat-runtime-obfuscation-base64exec;capability-network-outbound;threat-network-outbound-shady-links
+bup-utils,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-setup-suspicious-imports;capability-process-spawn;capability-process-hooks
+dependency1338,malicious,recovered_local_archive (pypi_malregistry),True,9,True,True,threat-setup-suspicious-imports;capability-network-outbound;threat-network-exfiltration;capability-process-hooks;capability-network-download;threat-runtime-system-info;threat-network-outbound-shady-links;threat-setup-network-in-install;threat-network-exfil-sysinfo
+web3-essential,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,capability-network-outbound;threat-setup-network-in-install;capability-network-download;threat-setup-suspicious-imports
+esqstudyvirtualver,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+esqcvccre,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+forenitz,malicious,recovered_local_archive (pypi_malregistry),True,4,True,True,capability-process-spawn;capability-filesystem-read;threat-runtime-dynamic-loader;threat-runtime-obfuscation-import-exec
+tkcalendaar,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+aiohttp-sock,malicious,recovered_local_archive (pypi_malregistry),False,5,True,True,threat-process-download-exec;threat-setup-suspicious-imports;capability-process-spawn;capability-network-outbound;capability-filesystem-read
+supermask,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+tppyintgame,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+pepcraft,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+tpvisaproof,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+social-scrappers,malicious,recovered_local_archive (pypi_malregistry),True,1,True,False,capability-process-spawn
+py-maskpyw,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;capability-process-spawn;threat-process-powershell-encoded
+libverpullpong,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;capability-process-spawn;threat-process-download-exec
+mescouilles,malicious,recovered_local_archive (pypi_malregistry),True,13,True,True,threat-network-exfiltration;capability-filesystem-browser;capability-network-outbound;threat-process-spawn-silent;threat-process-download-exec;capability-network-download;threat-runtime-screencapture;capability-process-spawn;threat-filesystem-read;capability-filesystem-delete;threat-network-outbound-shady-links;capability-filesystem-read;threat-network-exfil-messenger
+pill9w,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;capability-process-hooks;threat-setup-suspicious-imports
+osintinfo,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-powershell-encoded;threat-process-download-exec
+yfinancee,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+arcalife,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,threat-process-download-exec;threat-setup-network-in-install;capability-network-download;threat-setup-suspicious-imports;capability-network-outbound;capability-process-spawn;capability-process-hooks
+pongcc,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+aiohttp-openssl,malicious,recovered_local_archive (pypi_malregistry),True,4,True,False,capability-process-schedule;capability-filesystem-read;capability-process-spawn;capability-network-outbound
+requirementstxtx,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-setup-suspicious-imports;capability-process-hooks;capability-process-spawn
+webscoket-client,malicious,recovered_local_archive (pypi_malregistry),True,0,False,False,
+esqpostosintpush,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-download-exec;threat-process-powershell-encoded;capability-process-spawn
+disutil,malicious,recovered_local_archive (pypi_malregistry),False,2,True,True,capability-process-spawn;threat-runtime-obfuscation-import-exec
+fuzzzywuzzy,malicious,recovered_local_archive (pypi_malregistry),False,7,True,True,capability-process-hooks;capability-process-spawn;capability-network-download;capability-network-outbound;threat-process-download-exec;threat-setup-network-in-install;threat-setup-suspicious-imports
+selfcontrolhackedpaypal,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,capability-process-spawn;threat-process-download-exec;threat-process-powershell-encoded
+web3-pu,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-setup-suspicious-imports;capability-process-hooks;capability-process-spawn
+craftad,malicious,recovered_local_archive (pypi_malregistry),True,3,True,True,threat-process-powershell-encoded;threat-process-download-exec;capability-process-spawn
+ramzipdf,benign,live_pypi,,0,False,False,
+aioredis-models,benign,live_pypi,,0,False,False,
+ZAE0N-test,benign,live_pypi,,0,False,False,
+sscrypto,benign,live_pypi,,1,True,True,typosquatting
+tkr-pytket-worker-impl,benign,live_pypi,,0,False,False,
+robust-input,benign,live_pypi,,1,True,False,capability-filesystem-read
+baoh-operations,benign,live_pypi,,1,True,True,threat-process-hooks
+reco-ai,benign,live_pypi,,0,False,False,
+quick-actions,benign,live_pypi,,2,True,False,capability-process-spawn;capability-network-outbound
+perturbmerge,benign,live_pypi,,0,False,False,
+dewbee,benign,live_pypi,,0,False,False,
+flet-rive,benign,live_pypi,,0,False,False,
+retakesearch-fork,benign,live_pypi,,1,True,False,capability-network-download
+final-probdist,benign,live_pypi,,1,True,False,capability-filesystem-read
+jupyter-server-proxy,benign,live_pypi,,4,True,False,capability-filesystem-read;capability-network-download;capability-process-spawn;capability-network-outbound
+marshmallow-mongoengine-query-schema,benign,live_pypi,,1,True,False,capability-filesystem-read
+org-mode-agenda,benign,live_pypi,,3,True,False,capability-network-outbound;capability-network-download;capability-filesystem-read
+pytest-keep-together,benign,live_pypi,,0,False,False,
+n7gg,benign,live_pypi,,0,False,False,
+pmg,benign,live_pypi,,3,True,False,capability-filesystem-read;capability-process-spawn;capability-filesystem-write-executable
+keep-cli,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-process-spawn
+BitLyClient-Library,benign,live_pypi,,1,True,True,threat-network-outbound-shady-links
+wrapify,benign,live_pypi,,3,True,True,capability-process-spawn;threat-process-download-exec;capability-filesystem-delete
+st-ollama,benign,live_pypi,,1,True,False,capability-process-spawn
+mygo-goto,benign,live_pypi,,1,True,False,capability-process-spawn
+chainguard-pig-latin,benign,live_pypi,,0,False,False,
+pyson-data,benign,live_pypi,,0,False,False,
+images-dataset,benign,live_pypi,,1,True,False,capability-filesystem-read
+savelib,benign,live_pypi,,1,True,False,capability-filesystem-read
+another-dependency-injector,benign,live_pypi,,0,False,False,
+chatclicks,benign,live_pypi,,0,False,False,
+tark,benign,live_pypi,,2,True,True,typosquatting;capability-filesystem-read
+aori-sdk-py,benign,live_pypi,,2,True,True,capability-network-outbound;threat-runtime-environment-read
+actadiurna,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-process-spawn
+pyqt-ani-button,benign,live_pypi,,0,False,False,
+change-analyzer,benign,live_pypi,,2,True,True,capability-filesystem-read;threat-runtime-screencapture
+b1841670,benign,live_pypi,,1,True,True,deceptive_author
+cdktf-tf-module-stack,benign,live_pypi,,0,False,False,
+scale_core,benign,live_pypi,,0,False,False,
+kwargs_obj,benign,live_pypi,,1,True,False,capability-filesystem-read
+bashguard,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-process-spawn
+excalidraw-skill-pack-theme-stripe-press,benign,live_pypi,,0,False,False,
+chain-listener,benign,live_pypi,,1,True,False,capability-network-outbound
+ukaea-multiparser,benign,live_pypi,,1,True,False,capability-filesystem-read
+task-sequencer,benign,live_pypi,,0,False,False,
+fastset,benign,live_pypi,,0,False,False,
+pysentio-pkg-astrandb,benign,live_pypi,,0,False,False,
+py-sitemap-parser,benign,live_pypi,,0,False,False,
+vbjax-dynamics,benign,live_pypi,,1,True,False,capability-filesystem-read
+uulm-mensa,benign,live_pypi,,3,True,False,capability-filesystem-read;capability-network-outbound;capability-network-download
+bigchin,benign,live_pypi,,1,True,False,capability-process-spawn
+commanderbot-ext,benign,live_pypi,,2,True,False,capability-network-outbound;capability-filesystem-read
+claif,benign,live_pypi,,1,True,True,threat-runtime-environment-read
+cryptnox-cli,benign,live_pypi,,3,True,False,capability-network-download;capability-filesystem-read;capability-network-outbound
+neuralviz,benign,live_pypi,,2,True,True,deceptive_author;capability-process-spawn
+enthusiast-agent-invoice-scanning,benign,live_pypi,,1,True,False,capability-filesystem-read
+human-cupid,benign,live_pypi,,1,True,False,capability-process-spawn
+pybnfalabuda,benign,live_pypi,,3,True,False,capability-process-spawn;capability-filesystem-read;capability-filesystem-delete
+raisecom-netmiko,benign,live_pypi,,0,False,False,
+automate-wsgi,benign,live_pypi,,1,True,False,capability-filesystem-read
+pycraigslist,benign,live_pypi,,0,False,False,
+theia-open,benign,live_pypi,,3,True,True,capability-filesystem-read;capability-network-outbound;threat-runtime-environment-read
+prview,benign,live_pypi,,3,True,True,threat-process-download-exec;capability-process-spawn;threat-runtime-keylogging
+cat-survey,benign,live_pypi,,0,False,False,
+e2xgrader-cell-registry,benign,live_pypi,,2,True,False,capability-process-spawn;capability-network-outbound
+pyexam11,benign,live_pypi,,0,False,False,
+yorbali,benign,live_pypi,,0,False,False,
+pvrhino,benign,live_pypi,,3,True,True,bundled_binary;capability-process-spawn;capability-network-outbound
+alibabacloud-tea-fileform,benign,live_pypi,,1,True,False,capability-filesystem-read
+stub-ai,benign,live_pypi,,2,True,True,capability-filesystem-read;threat-runtime-environment-read
+deebase,benign,live_pypi,,4,True,True,capability-network-outbound;threat-filesystem-read;capability-process-spawn;threat-process-download-exec
+scrape-highlighted,benign,live_pypi,,0,False,False,
+routelabs-router,benign,live_pypi,,2,True,False,capability-process-spawn;capability-network-lolbas
+grabpy,benign,live_pypi,,5,True,True,typosquatting;capability-network-download;capability-network-outbound;capability-filesystem-read;capability-filesystem-delete
+pyobjc-framework-Speech,benign,live_pypi,,0,False,False,
+dtw-som,benign,live_pypi,,0,False,False,
+neon-skill-instructions,benign,live_pypi,,0,False,False,
+refit,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-process-spawn
+aipa-cli,benign,live_pypi,,1,True,True,threat-filesystem-read
+django-admin-action-hero,benign,live_pypi,,0,False,False,
+ml2p,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-filesystem-delete
+KAN-synth,benign,live_pypi,,2,True,True,threat-runtime-obfuscation-unicode;capability-process-spawn
+tetra-dynamics,benign,live_pypi,,5,True,True,bundled_binary;capability-process-spawn;capability-network-download;capability-filesystem-read;capability-network-outbound
+requestsdefaulter,benign,live_pypi,,1,True,False,capability-filesystem-read
+polars-gw-viz,benign,live_pypi,,10,True,True,capability-process-schedule;capability-network-outbound;threat-runtime-obfuscation-steganography;threat-runtime-obfuscation;capability-network-download;threat-network-outbound-shady-links;threat-runtime-obfuscation-base64exec;capability-filesystem-read;capability-filesystem-delete;capability-process-spawn
+hysetter,benign,live_pypi,,3,True,False,capability-filesystem-delete;capability-process-spawn;capability-network-outbound
+aliyunpan,benign,live_pypi,,5,True,False,capability-network-outbound;capability-process-spawn;capability-filesystem-read;capability-runtime-clipboard;capability-filesystem-delete
+tftp-router-flasher,benign,live_pypi,,1,True,False,capability-process-spawn
+EasyFileHandling,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-filesystem-delete
+pseudosugar,benign,live_pypi,,3,True,True,threat-runtime-obfuscation-steganography;capability-filesystem-read;capability-process-spawn
+keycloak-manager,benign,live_pypi,,1,True,False,capability-network-outbound
+xortool,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-filesystem-delete
+dbS3,benign,live_pypi,,1,True,False,capability-filesystem-read
+polyplug-loaders-native,benign,live_pypi,,1,True,True,bundled_binary
+PDFManagers,benign,live_pypi,,0,False,False,
+hadroid,benign,live_pypi,,3,True,False,capability-network-outbound;capability-process-schedule;capability-network-download
+pycopy-cmd,benign,live_pypi,,0,False,False,
+argyle,benign,live_pypi,,4,True,True,threat-filesystem-read;capability-filesystem-read;capability-network-lolbas;threat-filesystem-autostart
+influxdb3-python-cli,benign,live_pypi,,1,True,True,threat-runtime-environment-read
+print-List-Am,benign,live_pypi,,0,False,False,
+personal-finance-tracker-besim,benign,live_pypi,,2,True,False,capability-process-spawn;capability-filesystem-read
+data-insights-pro,benign,live_pypi,,0,False,False,
+pyobjc-framework-CoreData,benign,live_pypi,,0,False,False,
+ant-ask-me,benign,live_pypi,,5,True,False,capability-network-outbound;capability-filesystem-delete;capability-process-spawn;capability-filesystem-read;capability-network-download
+mMachine,benign,live_pypi,,0,False,False,
+pyatmp,benign,live_pypi,,1,True,False,capability-network-outbound
+sanic-session,benign,live_pypi,,0,False,False,
+django-generic-mail,benign,live_pypi,,1,True,False,capability-filesystem-read
+itasca-mcp,benign,live_pypi,,1,True,False,capability-network-outbound
+evoten,benign,live_pypi,,1,True,False,capability-filesystem-read
+stactools-nisar,benign,live_pypi,,0,False,False,
+x21218315,benign,live_pypi,,0,False,False,
+drip,benign,live_pypi,,1,True,True,typosquatting
+gbdi-tourism-platform-lib,benign,live_pypi,,1,True,False,capability-filesystem-read
+cruet,benign,live_pypi,,1,True,True,typosquatting
+python-aidot,benign,live_pypi,,1,True,False,capability-process-schedule
+affo-user-service,benign,live_pypi,,1,True,True,threat-filesystem-read
+ros2-mypypkg,benign,live_pypi,,0,False,False,
+prognosais,benign,live_pypi,,3,True,False,capability-filesystem-delete;capability-filesystem-read;capability-process-spawn
+sunpos,benign,live_pypi,,0,False,False,
+musculoskeletal-models,benign,live_pypi,,0,False,False,
+agentwallet-mcp,benign,live_pypi,,0,False,False,
+yanport-client,benign,live_pypi,,3,True,True,capability-filesystem-delete;threat-process-hooks;capability-filesystem-read
+undetected-chromedriver,benign,live_pypi,,6,True,False,capability-process-schedule;capability-network-outbound;capability-process-spawn;capability-filesystem-read;capability-filesystem-delete;capability-filesystem-write-executable
+vistir,benign,live_pypi,,5,True,False,capability-filesystem-read;capability-process-spawn;capability-filesystem-delete;capability-network-outbound;capability-filesystem-write-executable
+DaliAI,benign,live_pypi,,0,False,False,
+clever-bench,benign,live_pypi,,5,True,True,threat-process-download-exec;capability-filesystem-read;capability-network-lolbas;capability-filesystem-delete;capability-process-spawn
+tjwb,benign,live_pypi,,0,False,False,
+django-simple-ordering,benign,live_pypi,,0,False,False,
+vla-holo,benign,live_pypi,,4,True,False,capability-filesystem-delete;capability-network-outbound;capability-process-spawn;capability-filesystem-read
+yina,benign,live_pypi,,1,True,True,typosquatting
+tiddlywebplugins.docs,benign,live_pypi,,3,True,False,capability-filesystem-delete;capability-network-download;capability-filesystem-read
+channest,benign,live_pypi,,1,True,False,capability-filesystem-read
+mutai,benign,live_pypi,,6,True,True,threat-filesystem-read;capability-filesystem-delete;capability-filesystem-write-executable;capability-network-download;capability-network-outbound;capability-filesystem-read
+m2chart,benign,live_pypi,,3,True,True,capability-process-spawn;threat-runtime-obfuscation-base64exec;capability-filesystem-delete
+my-dsa,benign,live_pypi,,0,False,False,
+sq-native,benign,live_pypi,,0,False,False,
+ppio-sandbox,benign,live_pypi,,6,True,True,capability-process-spawn;capability-network-download;threat-runtime-environment-read;capability-filesystem-read;capability-network-lolbas;capability-network-outbound
+keymaker,benign,live_pypi,,5,True,True,threat-filesystem-read;capability-filesystem-read;capability-process-spawn;threat-filesystem-destruction;capability-process-schedule
+prose-wc,benign,live_pypi,,1,True,False,capability-filesystem-read
+markswift-client,benign,live_pypi,,3,True,False,capability-network-outbound;capability-filesystem-read;capability-network-download
+shikigami-bot,benign,live_pypi,,3,True,True,threat-filesystem-read;capability-network-outbound;capability-network-download
+labelImg2-zh,benign,live_pypi,,3,True,False,capability-process-spawn;capability-filesystem-read;capability-filesystem-delete
+pygco,benign,live_pypi,,2,True,True,capability-filesystem-read;threat-setup-suspicious-imports
+pyTigerGraph-mcp,benign,live_pypi,,2,True,True,capability-network-outbound;threat-filesystem-read
+babelvec,benign,live_pypi,,1,True,False,capability-filesystem-delete
+TracPrivateReports,benign,live_pypi,,0,False,False,
+trmath,benign,live_pypi,,3,True,True,threat-runtime-obfuscation-steganography;threat-runtime-obfuscation-unicode;capability-process-spawn
+mdemos.metrics,benign,live_pypi,,2,True,False,capability-filesystem-read;capability-process-spawn
+serviceping,benign,live_pypi,,1,True,False,capability-network-outbound
+file-magic,benign,live_pypi,,0,False,False,
+pd-money,benign,live_pypi,,1,True,True,typosquatting
+agentcost,benign,live_pypi,,2,True,False,capability-network-download;capability-network-outbound
+llm_cost_estimation,benign,live_pypi,,1,True,False,capability-process-spawn
+auto-verify,benign,live_pypi,,5,True,False,capability-process-spawn;capability-filesystem-delete;capability-filesystem-write-executable;capability-network-outbound;capability-filesystem-read
+pyres,benign,live_pypi,,2,True,True,typosquatting;capability-filesystem-read
+objp,benign,live_pypi,,1,True,False,capability-filesystem-read
+greennode,benign,live_pypi,,2,True,True,capability-filesystem-read;threat-runtime-environment-read
+csvw-functions,benign,live_pypi,,3,True,False,capability-network-download;capability-network-outbound;capability-filesystem-read
+pyebook,benign,live_pypi,,1,True,False,capability-filesystem-read
+graph-matrix-jsp-env,benign,live_pypi,,0,False,False,
+certchecker,benign,live_pypi,,1,True,False,capability-filesystem-read
+textforge,benign,live_pypi,,4,True,True,capability-process-spawn;capability-filesystem-read;capability-network-lolbas;threat-process-download-exec
+chess-extractor,benign,live_pypi,,2,True,False,capability-network-outbound;capability-network-download
+bamboo.pantrybell,benign,live_pypi,,3,True,False,capability-filesystem-read;capability-network-download;capability-network-outbound
+wmdaten-data-api-client,benign,live_pypi,,0,False,False,
+evm_extras,benign,live_pypi,,0,False,False,
+IODLoader,benign,live_pypi,,2,True,False,capability-network-download;capability-network-outbound
+my-datasets-lib,benign,live_pypi,,0,False,False,
+neuralchemy,benign,live_pypi,,0,False,False,
+octavia,benign,live_pypi,,7,True,True,capability-process-spawn;capability-filesystem-read;capability-network-outbound;capability-network-download;capability-filesystem-write-executable;capability-filesystem-delete;threat-network-exfiltration
+disjoint-forest,benign,live_pypi,,1,True,True,bundled_binary
+referbook,benign,live_pypi,,1,True,False,capability-process-spawn
+nonebot-plugin-weather-rank,benign,live_pypi,,1,True,False,capability-filesystem-read
+gpsdio-sort,benign,live_pypi,,3,True,False,capability-filesystem-delete;capability-filesystem-read;capability-process-spawn
+swepin,benign,live_pypi,,0,False,False,
+cff2pages,benign,live_pypi,,0,False,False,
+PyNetMet,benign,live_pypi,,1,True,False,capability-filesystem-read
+slack-cli-webhook,benign,live_pypi,,1,True,False,capability-network-outbound
+getschema,benign,live_pypi,,1,True,False,capability-filesystem-read
+qin-task,benign,live_pypi,,0,False,False,
+folioforecast,benign,live_pypi,,1,True,False,capability-network-download
+circuitpython-stubs,benign,live_pypi,,1,True,False,capability-filesystem-read
+insteon-hub,benign,live_pypi,,3,True,False,capability-network-download;capability-filesystem-read;capability-network-outbound
+promptground,benign,live_pypi,,1,True,False,capability-network-outbound
+pyams-portal,benign,live_pypi,,1,True,False,capability-filesystem-read
+django-hatstall,benign,live_pypi,,1,True,False,capability-filesystem-read
+tnsaai-client,benign,live_pypi,,2,True,True,capability-filesystem-read;threat-runtime-environment-read
+django-blueprint,benign,live_pypi,,0,False,False,
+mbo_suite3d,benign,live_pypi,,5,True,False,capability-filesystem-delete;capability-process-schedule;capability-filesystem-read;capability-process-spawn;capability-network-outbound
+aiodnsprox,benign,live_pypi,,1,True,False,capability-process-spawn
+pyschemaelectrical,benign,live_pypi,,1,True,False,capability-filesystem-delete
+entropic,benign,live_pypi,,0,False,False,
+tochka-esia-client,benign,live_pypi,,0,False,False,
+torizon-templates-utils,benign,live_pypi,,3,True,True,threat-runtime-environment-read;capability-process-spawn;capability-filesystem-read
+i054-pypi-preprocess,benign,live_pypi,,0,False,False,
+ibio,benign,live_pypi,,5,True,True,typosquatting;capability-filesystem-read;capability-network-download;capability-process-spawn;capability-network-outbound
+wirtual-plugins-azure,benign,live_pypi,,0,False,False,
+codebase-graph,benign,live_pypi,,2,True,False,capability-network-outbound;capability-filesystem-read
+colorize-pinyin,benign,live_pypi,,0,False,False,

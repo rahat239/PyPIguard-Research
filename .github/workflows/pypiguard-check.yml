@@ -1,0 +1,43 @@
+# Reusable CI gate: scan a project's requirements.txt for known/likely
+# malicious PyPI dependencies before install, using PyPIGuard's CLI.
+#
+# Drop this file into any Python project's .github/workflows/ directory
+# (adjusting the `requirements-file` input if the project's file isn't at
+# the repo root) to gate merges/deploys on a dependency-safety check.
+#
+# This demonstrates PyPIGuard as a reusable component of another project's
+# pipeline, not just a standalone research artifact -- the concrete form of
+# "reuse" evidence: an actual CI job definition, runnable as-is.
+name: PyPIGuard dependency check
+
+on:
+  pull_request:
+    paths:
+      - "requirements*.txt"
+      - "pyproject.toml"
+  workflow_dispatch:
+    inputs:
+      requirements-file:
+        description: "Path to the requirements.txt to scan"
+        required: false
+        default: "requirements.txt"
+
+jobs:
+  scan-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository under test
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyPIGuard
+        run: |
+          pip install "pypiguard @ git+https://github.com/<org>/PyPIGuard-Research.git"
+
+      - name: Scan requirements.txt and fail the build on any malicious verdict
+        run: |
+          pypiguard scan-requirements "${{ github.event.inputs.requirements-file || 'requirements.txt' }}" --fail-on-malicious

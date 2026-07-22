@@ -1,0 +1,12 @@
+# Case study: actual core runtime dependencies of `black` (the widely-used
+# Python code formatter), as declared on PyPI (requires_dist, non-extra
+# entries only, fetched 2026-07-22). Used here as a real-world input to
+# `pypiguard scan-requirements`, not a synthetic/curated test set.
+click>=8.0.0
+mypy-extensions>=0.4.3
+packaging>=22.0
+pathspec>=1.0.0
+platformdirs>=2
+pytokens~=0.4.0
+tomli>=1.1.0
+typing-extensions>=4.0.1
