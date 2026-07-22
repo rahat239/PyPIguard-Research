@@ -16,6 +16,7 @@
 
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{xurl}
 \setlength{\parindent}{0pt}
 
 \journal{SoftwareX}
@@ -93,32 +94,34 @@ In practical terms: a developer supplies a package name, archive, or notebook; P
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.48\textwidth]{architecture_diagram.png}
+\includegraphics[width=4.5in]{architecture_diagram.png}
 \caption{PyPIGuard architecture. Solid arrows: live analysis path. Dashed arrow: verified-lookup shortcut.}
 \label{fig:architecture}
 \end{figure}
 
-    \item \textbf{Software functionalities.} Three input modes share one verdict format. \textit{Package-name scanning} downloads and analyzes a package live via PyPI's API. \textit{Archive-file scanning} accepts a local \texttt{.tar.gz}/\texttt{.zip}/\texttt{.whl} directly -- useful for historical malware PyPI has since removed. Extraction is hardened against path-traversal (``zip-slip'') attacks, validated against a crafted adversarial archive. \textit{Notebook scanning} parses every \texttt{.ipynb} code cell, extracts \texttt{import}/\texttt{pip install} references, excludes Python's $\sim$300 standard-library modules, resolves import-to-distribution mismatches (e.g., \texttt{cv2}$\to$\texttt{opencv-python}), and reports how many referenced packages are known or suspected malware before execution. Every verdict includes a CLEARED/FLAGGED label, confidence, flagged patterns (e.g., \texttt{eval()} usage, \texttt{setup.py} \texttt{cmdclass} hooks, high-entropy blobs), and a bytecode-level detector for calls like \texttt{getattr(\_\_builtins\_\_,...)} that identifies dynamic dangerous-function invocation independent of the string-construction technique used to hide it. Current limitations: no dynamic/execution-based analysis, and reduced reliability for packages structurally far larger than the training data (flagged via the safety gate above).
+    \item \textbf{Software functionalities.} Three input modes share one verdict format. \textit{Package-name scanning} downloads and analyzes a package live via PyPI's API. \textit{Archive-file scanning} accepts a local archive (\texttt{.tar.gz}, \texttt{.zip}, or \texttt{.whl}) directly -- useful for historical malware PyPI has since removed. Extraction is hardened against path-traversal (``zip-slip'') attacks, validated against a crafted adversarial archive. \textit{Notebook scanning} parses every \texttt{.ipynb} code cell, extracts \texttt{import}/\texttt{pip install} references, excludes Python's $\sim$300 standard-library modules, resolves import-to-distribution mismatches (e.g., \texttt{cv2}$\to$\texttt{opencv-python}), and reports how many referenced packages are known or suspected malware before execution. Every verdict includes a CLEARED/FLAGGED label, confidence, flagged patterns (e.g., \texttt{eval()} usage, \texttt{setup.py} \texttt{cmdclass} hooks, high-entropy blobs), and a bytecode-level detector for calls that dynamically invoke dangerous functions (e.g., via \texttt{getattr} on \texttt{\_\_builtins\_\_}) independent of the specific string-construction technique used to hide the target function name. Current limitations: no dynamic/execution-based analysis, and reduced reliability for packages structurally far larger than the training data (flagged via the safety gate above).
 
     \item \textbf{Sample code snippets.} The detection core is invoked identically from the CLI, the Python API, and the web app. A representative end-to-end CLI scan:
 \begin{verbatim}
 $ pip install pypiguard
 $ pypiguard scan requests
 Package: requests
-Verdict: CLEARED (confidence 54.3%)
+Verdict: CLEARED (confidence 54.7%)
 Flagged patterns: none above threshold
 \end{verbatim}
-Internally, \texttt{scan} resolves the package name against PyPI, downloads the source distribution, and calls the same feature-extraction/classification/explanation pipeline the web app uses:
+Internally, \texttt{scan} resolves the package name against PyPI, downloads the source distribution, and calls the same feature-extraction, classification, and explanation pipeline the web app uses:
 \begin{verbatim}
 import ast_features, regex_features, joblib
-feats = {**regex_features.extract(source_dir),
-         **ast_features.extract_ast_features(source_dir)}
+feats = {
+    **regex_features.extract(source_dir),
+    **ast_features.extract_ast_features(source_dir)
+}
 model = joblib.load("final_integrated_model.joblib")
 proba = model.predict_proba([feats])[0]
 verdict = "malicious" if proba[1] > 0.5 else "benign"
 explanation = shap_explainer(feats)
 \end{verbatim}
-The web application wraps this same pipeline behind the three input modes; full implementation, including \texttt{scan-file} and \texttt{scan-requirements}, is in the code repository (C2).
+The web application wraps this same pipeline behind the three input modes; full implementation, including the file- and requirements-scanning commands, is in the code repository (C2).
 \end{enumerate}
 
 \item Illustrative examples
@@ -144,7 +147,7 @@ A user submits a package name (e.g., \texttt{requests}) or uploads a local archi
 
 \item Impact
 
-\textbf{Evaluation methodology.} The final model was trained on 9,723 labeled packages (7,960 malicious, 1,763 benign; the entire available archive from [4]) and evaluated on an independent 400-package held-out set with zero package-name overlap: 0.9993 ROC-AUC, 0.9993 PR-AUC, 0.95 precision, 0.99 recall on the malicious class (Figure~\ref{fig:results}a). As an independent check on label quality (addressing that this dataset originates from a single source), the 200 held-out malicious package names were cross-referenced against the OpenSSF \texttt{malicious-packages} database [5], an independent, community-maintained registry; 172/200 (86\%) are independently corroborated. Full dataset-construction methodology is in the code repository (C2).
+\textbf{Evaluation methodology.} The final model was trained on 9,723 labeled packages (7,960 malicious, 1,763 benign; the entire available archive from [4]) and evaluated on an independent 400-package held-out set with zero package-name overlap: 0.9993 ROC-AUC, 0.9993 PR-AUC, 0.957 precision, 0.995 recall on the malicious class (n=396; 4 packages excluded due to archive-retrieval failures unrelated to model performance -- see Figure~\ref{fig:results}a caption). As an independent check on label quality (addressing that this dataset originates from a single source), the 200 held-out malicious package names were cross-referenced against the OpenSSF \texttt{malicious-packages} database [5], an independent, community-maintained registry; 172/200 (86\%) are independently corroborated. Full dataset-construction methodology is in the code repository (C2).
 
 \begin{figure}[htbp]
 \centering
@@ -159,7 +162,7 @@ A user submits a package name (e.g., \texttt{requests}) or uploads a local archi
 \includegraphics[width=\textwidth]{phase4_shap_summary.png}
 \small (b) SHAP summary
 \end{minipage}
-\caption{(a) Confusion matrix, held-out set: 189/200 benign correctly cleared (11 FP), 199/200 malicious correctly flagged (1 FN). (b) SHAP global feature importance: horizontal position shows impact on model output, color shows feature value.}
+\caption{(a) Confusion matrix, primary held-out set (n=396 of 400; 4 excluded due to archive-retrieval failures -- corrupt download, missing sdist, or network timeout -- unrelated to model performance): 188/197 benign correctly cleared (9 FP), 198/199 malicious correctly flagged (1 FN). (b) SHAP global feature importance: horizontal position shows impact on model output, color shows feature value.}
 \label{fig:results}
 \end{figure}
 
@@ -172,15 +175,16 @@ A user submits a package name (e.g., \texttt{requests}) or uploads a local archi
 \small
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Metric} & \textbf{PyPIGuard} & \textbf{GuardDog (any rule)} & \textbf{GuardDog (threat rules only)} \\
+\textbf{Metric} & \textbf{PyPIGuard} & \textbf{GuardDog} & \textbf{GuardDog} \\
+ & & \textbf{(any rule)} & \textbf{(threat only)} \\
 \hline
-Precision & 0.948 & 0.576 & 0.788 \\
+Precision & 0.957 & 0.576 & 0.788 \\
 Recall & 0.995 & 0.910 & 0.875 \\
-F1 & 0.971 & 0.705 & 0.829 \\
-False positive rate & 0.055 & 0.670 & 0.235 \\
+F1 & 0.975 & 0.705 & 0.829 \\
+False positive rate & 0.046 & 0.670 & 0.235 \\
 \hline
 \end{tabular}
-\caption{Head-to-head comparison on the identical 400-package held-out set (200 malicious, 200 benign).}
+\caption{Head-to-head comparison on the primary 400-package held-out set (200 malicious, 200 benign). GuardDog scanned all 400; PyPIGuard's n=396 excludes 4 packages that failed archive retrieval during re-evaluation (Figure~\ref{fig:results}a caption) -- a $<$1\% difference in evaluated set, noted for precision rather than presented as strictly identical.}
 \label{tab:guarddog}
 \end{table}
 
@@ -192,9 +196,9 @@ False positive rate & 0.055 & 0.670 & 0.235 \\
 
 \textbf{Confidence calibration (deployment-testing finding).} Confidence is the Random Forest's raw class-probability output (the fraction of trees voting malicious) at the standard 0.5 decision threshold; no post-hoc calibration such as Platt scaling or isotonic regression is applied, so scores are a monotonic ranking signal rather than a guaranteed well-calibrated probability -- disclosed here as a limitation, not a hidden design choice. Scans are deterministic given identical input, so the relevant stability question is across package \emph{versions}, characterized next: \texttt{requests} was classified benign at 54.3\% confidence during reviewer testing -- correct, but near the decision boundary. Testing five historical \texttt{requests} releases (2011--2026) found 3 of 5 \textbf{misclassified as malicious}. A prior draft attributed this uniformly to vendored dependencies; re-investigation found this holds for only 1 of 3 versions, with the other two caused by \texttt{setup.py} packaging boilerplate and \texttt{tests/} directory content -- non-runtime code treated identically to shipped code by the feature extractor. A feature-extraction-level filter targeting this was tried first and rejected: it produced no net false-positive reduction and introduced new false negatives on real malware that clones \texttt{requests}' test suite to camouflage itself. Full per-version root-cause breakdown is in the code repository (C2).
 
-\textbf{Fix (v1.1, hard-negative retraining).} \texttt{requests} and its common dependencies were entirely absent from the training set despite being this manuscript's own illustrative example. Adding 7 hard-negative training examples (historical \texttt{requests}/\texttt{chardet}/\texttt{six} releases) and retraining the identical architecture (still 2.3~s) fixes all 5 \texttt{requests} versions and modestly improves the primary held-out set (F1 0.978$\to$0.983). This has a measured cost, reported rather than omitted: on the independent secondary set, recall drops 93.0\%$\to$91.0\% (5 packages newly missed, all already near-decision-boundary in v1.0, one a byte-for-byte \texttt{requests} clone with zero injected code -- an inherent static-analysis limitation, not specific to this fix). A sample-weight sweep (0.1$\times$--5$\times$) confirmed the trade-off is intrinsic, not tunable away. Full derivation is in the code repository (C2). A path-traversal (``zip-slip'') vulnerability, found and patched via a crafted adversarial archive prior to deployment, is documented there for the same transparency reason.
+\textbf{Fix (v1.1, hard-negative retraining).} \texttt{requests} and its common dependencies were entirely absent from the training set despite being this manuscript's own illustrative example. Adding 7 hard-negative training examples (historical \texttt{requests}/\texttt{chardet}/\texttt{six} releases) and retraining the identical architecture (still 2.3~s) fixes all 5 \texttt{requests} versions. This has a measured cost, reported rather than omitted: on the independent secondary set (n=400), recall drops 93.0\%$\to$91.0\% (0.963 precision, 3.5\% FPR right after this fix; 5 newly missed -- \texttt{nhmpy}, \texttt{xoloaoqcjnreyc}, \texttt{xolopfydnuxyfh}, \texttt{wayspiritmcp-ppa}, \texttt{claude-lite} -- all near-decision-boundary in v1.0 at 51--62\% confidence, not a confident detection lost; one a byte-for-byte \texttt{requests} clone with zero injected code -- an inherent static-analysis limitation, not specific to this fix). A sample-weight sweep (0.1$\times$--5$\times$) confirmed the trade-off is intrinsic, not tunable away. After the subsequent v1.2 fix below, the secondary-set result shifts slightly to 0.953 precision, 0.910 recall (unchanged), 0.931 F1, 4.5\% FPR; the final primary-held-out-set performance is reported above (0.957 precision, 0.995 recall, Figure~\ref{fig:results}a). Full derivation is in the code repository (C2). A path-traversal (``zip-slip'') vulnerability, found and patched via a crafted adversarial archive prior to deployment, is documented there for the same transparency reason.
 
-\textbf{Fix (v1.2, found via real-world reuse testing).} Rather than asserting reuse potential, we tested it: the new CLI (below) was run against the actual PyPI-declared dependencies of \texttt{black}, an unrelated real-world project, as a genuine case study. Of 8 dependencies, 7 cleared correctly; \texttt{typing-extensions} -- a foundational, ubiquitous typing-compatibility package -- was flagged malicious at 68.0\% confidence, root-caused to the same non-runtime-code pattern as \texttt{requests} (its sdist bundles CPython's own 9,768-line test suite). The identical hard-negative fix (8 historical versions, retrain, full regression check) corrects it: \texttt{typing-extensions} now classifies correctly, all \texttt{requests} versions remain correct, and combined across both held-out sets (796 cases) precision moves 0.967$\to$0.955, F1 0.960$\to$0.954 (9 new misses, 4 corrected, net $-5$, all 13 affected cases within 50--60\% confidence in both versions). Full derivation is in the code repository (C2).
+\textbf{Fix (v1.2, found via real-world reuse testing).} Rather than asserting reuse potential, we tested it: the new CLI (below) was run against the actual PyPI-declared dependencies of \texttt{black}, an unrelated real-world project, as a genuine case study. Of 8 dependencies, 7 cleared correctly; \texttt{typing-extensions} -- a foundational, ubiquitous typing-compatibility package -- was flagged malicious at 68.0\% confidence, root-caused to the same non-runtime-code pattern as \texttt{requests} (its sdist bundles CPython's own 9,768-line test suite). The identical hard-negative fix (8 historical versions, retrain, full regression check) corrects it: \texttt{typing-extensions} now classifies correctly (80.7\% confidence, benign), all \texttt{requests} versions remain correct, and combined across both held-out sets (796 cases) precision moves 0.967$\to$0.955, F1 0.960$\to$0.954 (9 new misses, 4 corrected, net $-5$, all 13 affected cases within 50--60\% confidence in both versions). Full derivation is in the code repository (C2).
 
 \textbf{Practical impact and reuse.} Intended users are developers, students, and CI/CD pre-install gates. Given the current combined 4.5\% FP / 4.8\% FN rates (v1.2, both held-out sets) and explicit uncertainty flagging, PyPIGuard is a decision-support triage tool, not an autonomous blocker; it is deployed as a public, live tool (Section 5), testable against real historical malware the live registry no longer serves. Beyond the web deployment, v1.2 adds a pip-installable \texttt{pypiguard} library and CLI (\texttt{scan}, \texttt{scan-file}, \texttt{scan-requirements --fail-on-malicious} for CI gating) and a ready-to-use GitHub Actions workflow (C2), so the tool is consumable programmatically, not only via the web form. Exercising this tooling against a real external project's actual dependencies is precisely what surfaced the \texttt{typing-extensions} finding above -- the reuse tooling functioned as an independent reliability check, not only a packaging exercise. Full CLI/CI documentation is in the code repository (C2).
 
