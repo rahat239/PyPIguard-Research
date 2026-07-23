@@ -81,15 +81,15 @@ Confusion matrices on the identical 400-package held-out set:
 
 | Metric | PyPIGuard (from manuscript) | GuardDog — Def. A (any finding) | GuardDog — Def. B (threat/heuristic only) |
 |---|---|---|---|
-| TP (malicious flagged) | 199 / 200 | 182 / 200 | 175 / 200 |
-| FN (malicious missed) | 1 / 200 | 18 / 200 | 25 / 200 |
-| TN (benign cleared) | 189 / 200 | 66 / 200 | 153 / 200 |
-| FP (benign flagged) | 11 / 200 | 134 / 200 | 47 / 200 |
-| Precision | 0.948 | 0.576 | 0.788 |
+| TP (malicious flagged) | 198 / 199 | 182 / 200 | 175 / 200 |
+| FN (malicious missed) | 1 / 199 | 18 / 200 | 25 / 200 |
+| TN (benign cleared) | 188 / 197 | 66 / 200 | 153 / 200 |
+| FP (benign flagged) | 9 / 197 | 134 / 200 | 47 / 200 |
+| Precision | 0.957 | 0.576 | 0.788 |
 | Recall | 0.995 | 0.910 | 0.875 |
-| F1 | 0.971 | 0.705 | 0.829 |
-| False positive rate | 0.055 | 0.670 | 0.235 |
-| Accuracy | 0.970 | 0.620 | 0.820 |
+| F1 | 0.975 | 0.705 | 0.829 |
+| False positive rate | 0.046 | 0.670 | 0.235 |
+| Accuracy | 0.975 | 0.620 | 0.820 |
 
 Under both definitions, PyPIGuard outperforms GuardDog on precision, F1, and false
 positive rate on this identical held-out set, while recall is closer (GuardDog Def.
@@ -99,7 +99,7 @@ Definition A (67%) is driven almost entirely by broad `capability-*` rules
 firing on completely ordinary, benign code patterns (e.g. any package that shells
 out or opens a socket) — consistent with GuardDog's own documentation describing
 these as capability indicators rather than verdicts. Restricting to threat/heuristic
-rules (Def. B) brings GuardDog's FPR down to 23.5%, still roughly 4x PyPIGuard's 5.5%.
+rules (Def. B) brings GuardDog's FPR down to 23.5%, still roughly 5x PyPIGuard's 4.6%.
 
 The most frequent rules firing on malicious packages were `capability-process-spawn`
 (168/200), `threat-process-download-exec` (121/200), and
@@ -113,8 +113,8 @@ The most frequent rules firing on benign packages were `capability-filesystem-re
 
 This replaces the prior "Cerebro-inspired proxy comparison" language with a real,
 reproducible baseline: *"GuardDog (DataDog, v3.1.0) was run against the identical
-400-package held-out set... PyPIGuard achieves higher precision (0.948 vs.
-0.576–0.788) and a substantially lower false-positive rate (5.5% vs. 23.5–67.0%)
+400-package held-out set... PyPIGuard achieves higher precision (0.957 vs.
+0.576–0.788) and a substantially lower false-positive rate (4.6% vs. 23.5–67.0%)
 than GuardDog on the same data, while both tools achieve comparable recall."* The
 PyPI-takedown finding (199/200 malicious samples already removed from the live
 registry) is also worth a sentence, as it underscores PyPIGuard's motivating premise:

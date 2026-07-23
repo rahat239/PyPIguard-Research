@@ -142,11 +142,14 @@
     <section class="disclaimer-block">
       <p class="field-label"><span class="field-number">03</span> KNOW THE LIMITS OF THIS INSPECTION</p>
       <p class="disclaimer-text">
-        This tool analyzes real, live package code using a machine learning model trained on real, archived
-        malicious PyPI packages and real benign packages. Independently validated at 0.983 ROC-AUC on unseen
-        data. It is a triage aid, not a guarantee &mdash; some sophisticated or disguised malicious code can still
-        pass undetected (measured evasion rate: 9% under simple code transforms). Always review unfamiliar
-        packages yourself before installing in a sensitive environment.
+        This tool analyzes live package code using a machine learning model trained on archived
+        malicious PyPI packages and benign packages. Validated at 0.998 ROC-AUC on a name-disjoint
+        held-out set; a deeper check found this figure inflated by near-duplicate training data, and
+        a cluster-disjoint re-evaluation gives a more honest 0.983 ROC-AUC, 0.940 recall &mdash; treat
+        this as the more realistic estimate. It is a triage aid, not a guarantee &mdash; some
+        sophisticated or disguised malicious code can still pass undetected (measured evasion rate:
+        2% under AST-aware code transforms). Always review unfamiliar packages yourself before
+        installing in a sensitive environment.
       </p>
     </section>
 

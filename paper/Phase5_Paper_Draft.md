@@ -1,3 +1,5 @@
+> **⚠️ SUPERSEDED DRAFT — DO NOT CITE.** This is an early IEEE-conference-style draft with numbers that do not match the current SoftwareX submission (see `pypiguard_softwarex.tex`). Kept for historical reference only.
+
 # Detecting Malicious PyPI Packages Using Machine Learning on Package Metadata and Code-Level Features
 
 **Paper draft — ready to adapt into IEEE Conference LaTeX template (Overleaf)**

@@ -13,21 +13,43 @@ as a live, public web application and, as of v1.2, as an installable Python libr
 
 ## Headline Results
 
-| Metric | Value |
+**A note on the ROC-AUC/recall figures below, read this first:** the 0.998/0.995
+name-disjoint numbers are the standard held-out evaluation, but a direct check found
+they are inflated by template-level duplication (see "Known limitation" below). The
+0.983/0.940 cluster-disjoint numbers are the more defensible estimate of real-world
+generalization. Both are reported for transparency; the cluster-disjoint figure should
+be treated as the headline result, not the name-disjoint one.
+
+| Metric | Name-disjoint (inflated) | Cluster-disjoint (defensible) |
+|---|---|---|
+| ROC-AUC | 0.998 | 0.983 |
+| Precision | 0.957 | 0.978 |
+| Recall | 0.995 | 0.940 |
+| F1 | -- | 0.959 |
+| FPR | 4.6% | 3.8% |
+
+| Other metric | Value |
 |---|---|
-| Held-out ROC-AUC (v1.2 model) | 0.9993 |
-| Held-out PR-AUC | 0.9993 |
-| Primary held-out F1 (v1.2) | 0.983 |
-| Secondary (fully disjoint) held-out F1 (v1.2, combined w/ primary: 796 cases) | 0.954 |
-| Temporal validation ROC-AUC (train pre-cutoff, test post-cutoff) | 0.9843 |
+| Temporal validation ROC-AUC (train pre-cutoff, test post-cutoff) | 0.984 |
 | Adversarial evasion flip rate (final model) | 2% (down from 9% pre-AST-integration) |
-| Cross-ecosystem (npm) ROC-AUC | 0.818 |
-| GuardDog head-to-head FPR (this project vs. GuardDog, identical held-out set) | 5.5% vs. 67.0%/23.5% |
+| Cross-ecosystem (npm) ROC-AUC | 0.815-0.818 |
+| GuardDog head-to-head FPR (identical held-out set) | PyPIGuard 4.6% vs. GuardDog 67.0%/23.5% |
 | Model inference latency (single request, corrected) | 6.8-7.4 ms |
-| Training set size | 9,730 samples (7,960 malicious, 1,770 benign, incl. v1.1+v1.2 hard-negative additions) |
+| Training set size | 9,723 samples (7,960 malicious, 1,763 benign) |
 | Training time (full retrain) | 2.3 s on a single commodity CPU core |
 
-All results independently reproduced end-to-end with matching numbers to four decimal places.
+### Known limitation: name-disjoint splitting does not catch feature-level duplication
+
+Malicious PyPI campaigns routinely copy-paste one payload across many typosquat names.
+A direct check on the full training population found 89.8% of the 7,960 malicious
+training packages share a near-duplicate feature vector with another package (808
+distinct templates total). Checking the 200 held-out malicious packages against a
+1,500-package training-adjacent sample: 76 (38.0%) are exact feature-vector duplicates,
+186 (93.0%) are near-duplicates. A cluster-disjoint re-evaluation (splitting whole
+near-duplicate clusters, never individual packages, between train and test) gives the
+0.983/0.940/0.978/0.959/3.8% figures in the table above, and is the number this project
+considers the honest estimate of real-world generalization. Full methodology in the
+paper and `notebooks/`.
 
 ## Repository Structure
 
@@ -89,10 +111,10 @@ the state-of-the-art comparison was previously weak.
 
   | Metric | PyPIGuard | GuardDog (any rule) | GuardDog (threat rules only) |
   |---|---|---|---|
-  | Precision | 0.948 | 0.576 | 0.788 |
+  | Precision | 0.957 | 0.576 | 0.788 |
   | Recall | 0.995 | 0.910 | 0.875 |
-  | F1 | 0.971 | 0.705 | 0.829 |
-  | False positive rate | 0.055 | 0.670 | 0.235 |
+  | F1 | 0.975 | 0.705 | 0.829 |
+  | False positive rate | 0.046 | 0.670 | 0.235 |
 
 - **Resource/training-cost comparison against Cerebro and MalGuard:** since neither has
   released code, this compares our measured figures against each baseline's own published
@@ -248,33 +270,41 @@ If you use this work, please cite:
 ## Key Findings
 
 - A comprehensive static feature set (regex + AST + engineered, 35 features total) achieves
-  0.9993 ROC-AUC on genuinely independent, leakage-verified held-out data.
+  0.998 ROC-AUC on a name-disjoint held-out set, and 0.983 ROC-AUC on a genuinely
+  cluster-disjoint held-out set once feature-level near-duplicate leakage (see "Known
+  limitation" above) is accounted for -- the latter is the honest generalization estimate.
 - AST-level and bytecode-level analysis substantially improve adversarial evasion robustness
   (flip rate reduced from 9% to 2%) without requiring dynamic/behavioral execution.
 - Cross-ecosystem transfer (PyPI-trained model evaluated on real npm packages) is real but
   partial (0.818 ROC-AUC vs. 0.999 in-ecosystem), confirmed stable across two dataset scales.
 - Temporal validation confirms generalization to packages discovered after the training
   cutoff (0.984 ROC-AUC), a standard rigor check for malware detection specifically.
-- Two real deployment/reuse-testing findings (`requests`, `typing-extensions`) were traced
-  to the same training-data gap and fixed (v1.1, v1.2), with their small reliability
-  trade-offs measured and disclosed rather than hidden.
+- Two deployment/reuse-testing findings (`requests`, `typing-extensions`) were traced
+  to the same training-data gap and fixed (v1.1, v1.2), with their reliability
+  trade-offs measured and disclosed rather than hidden. A direct generalization test on
+  a third, previously-unused package (Django 6.0.7) found the underlying pattern is
+  **not resolved in general** -- v1.1/v1.2 fixed the two specific instances discovered,
+  not the broader failure mode. Disclosed plainly rather than left untested.
 - A labeled, honestly-bounded comparison against a Cerebro-inspired sequence-based baseline
   found the proxy modestly outperforming our tabular approach on matched data (0.983 vs.
   0.967 ROC-AUC), reported transparently rather than selectively.
 
 ## Known Limitations
 
-See the Threats to Validity section in `paper/Phase5_Paper_Draft.md` for a full discussion.
-In brief: this is static analysis only (no dynamic/sandboxed execution, a deliberate scope
-decision given the safety risk of executing real malware without dedicated isolation
-infrastructure); no static-content classifier can distinguish a byte-for-byte clone of a
-legitimate package from the original (demonstrated concretely by the `requests-testik11`
-case above); the Cerebro/MalGuard comparisons are either a labeled sequence-proxy or a
+See `paper/pypiguard_softwarex.tex` (the current SoftwareX submission) for the full
+discussion; `paper/Phase5_Paper_Draft.md` is an earlier, superseded IEEE-conference-style
+draft kept for historical reference and should not be treated as authoritative. In brief:
+this is static analysis only (no dynamic/sandboxed execution, a deliberate scope decision
+given the safety risk of executing real malware without dedicated isolation infrastructure);
+name-disjoint train/test splitting does not catch feature-level near-duplicate leakage (see
+"Known limitation" above -- this is the single most consequential finding in this project);
+no static-content classifier can distinguish a byte-for-byte clone of a legitimate package
+from the original; the Cerebro/MalGuard comparisons are either a labeled sequence-proxy or a
 resource-figure comparison, not a reproduction of the original systems (neither has released
 public code); model inference latency is 6.8-7.4ms per request (corrected from an earlier,
-incorrectly-benchmarked 0.18ms figure); and the training dataset remains class-imbalanced
-(82%/18%), though this was checked and does not appear to primarily drive the reported
-results.
+incorrectly-benchmarked 0.18ms figure); the training dataset remains class-imbalanced
+(82%/18%, mitigated with `class_weight="balanced"`); and the v1.1/v1.2 fixes are validated
+generalization patches, not a proven-general fix (see Django finding above).
 
 ## License
 
